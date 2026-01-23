@@ -11,7 +11,7 @@ export default function MobileMenu({ currentPath }: MobileMenuProps) {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
-    <div className="md:hidden">
+    <div>
       {/* Hamburger Button */}
       <button
         onClick={() => setIsOpen(!isOpen)}

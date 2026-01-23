@@ -38,8 +38,9 @@
 
   /* Animations */
   --animate-fade-up: fade-up 0.5s ease-out;
-  --animate-fade-in: fade-in 0.3s ease-out;
+  --animate-fade-in: fade-in 0.3s ease-out forwards;
   --animate-slide-in: slide-in 0.4s ease-out;
+  --animate-slide-down: slide-down 0.3s ease-out forwards;
   --animate-water-wave: water-wave 3s ease-in-out infinite;
   --animate-count-up: count-up 2s ease-out;
 
@@ -67,6 +68,17 @@
     to {
       opacity: 1;
       transform: translateX(0);
+    }
+  }
+
+  @keyframes slide-down {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
     }
   }
 

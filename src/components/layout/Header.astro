@@ -57,8 +57,10 @@ const currentPath = Astro.url.pathname;
         </a>
       </div>
 
-      <!-- Mobile Menu - Now rendered as fixed FAB, outside header flow -->
-      <MobileMenu client:load currentPath={currentPath} />
+      <!-- Mobile Menu (positioned absolute on mobile) -->
+      <div class="absolute right-4 md:hidden">
+        <MobileMenu client:load currentPath={currentPath} />
+      </div>
     </div>
   </div>
 </header>

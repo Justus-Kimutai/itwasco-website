@@ -1,6 +1,6 @@
 export const companyStats = [
   {
-    value: 3330,
+    value: 3750,
     label: "Active Connections",
     suffix: "+",
     description: "Households and businesses served",
@@ -27,7 +27,7 @@ export const companyStats = [
 
 export const growthMetrics = {
   connectionsIn2007: 500,
-  connectionsIn2018: 3330,
+  connectionsIn2018: 3750,
   growthFactor: 6.66,
   operationalSince: 2008,
   incorporated: 2007,

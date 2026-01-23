@@ -13,19 +13,6 @@ export const services = [
     ],
   },
   {
-    id: "sewerage",
-    title: "Sewerage Services",
-    description: "Modern wastewater management and sanitation infrastructure for urban areas.",
-    icon: "Waves",
-    image: "/images/services/sewerage.jpg",
-    features: [
-      "Wastewater collection",
-      "Treatment facilities",
-      "Environmental compliance",
-      "Infrastructure maintenance",
-    ],
-  },
-  {
     id: "infrastructure",
     title: "Infrastructure Development",
     description: "Expanding our network to serve more communities with modern water infrastructure.",
@@ -57,7 +44,7 @@ export const connectionSteps = [
   {
     step: 1,
     title: "Visit Our Office",
-    description: "Come to our office at the Water Treatment Works Compound in Iten",
+    description: "Our office is located at Iten town behind Posta",
   },
   {
     step: 2,

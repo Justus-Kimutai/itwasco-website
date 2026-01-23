@@ -9,7 +9,6 @@ export const navigationLinks = [
 export const footerLinks = {
   services: [
     { name: "Water Supply", href: "/services#water-supply" },
-    { name: "Sewerage Services", href: "/services#sewerage" },
     { name: "New Connections", href: "/services#connections" },
   ],
   company: [

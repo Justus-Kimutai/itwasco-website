@@ -5,7 +5,7 @@ export const companyInfo = {
 
   contact: {
     email: "infoitwasco@gmail.com",
-    phone: "0743 286 175",
+    phone: "0743286720",
     address: "Water Treatment Works Compound",
     poBox: "P.O Box 700-30700",
     city: "ITEN",
@@ -47,7 +47,7 @@ export const companyInfo = {
   milestones: [
     { year: 2007, event: "Company Incorporated", description: "ITWASCO incorporated with 500 initial water connections" },
     { year: 2008, event: "Operations Begin", description: "Started operational activities serving Iten and Tambach" },
-    { year: 2018, event: "Growth Milestone", description: "Reached 3,330 active connections - 6x growth" },
+    { year: 2018, event: "Growth Milestone", description: "Reached 3,750 active connections - 7.5x growth" },
     { year: 2024, event: "Strategic Plan", description: "Launched comprehensive 5-year strategic plan" },
   ],
 } as const;

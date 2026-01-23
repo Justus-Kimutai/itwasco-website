@@ -2,12 +2,12 @@ export const strategicThemes = [
   {
     id: 1,
     title: "Infrastructure Development & Expansion",
-    description: "Enhance water access and introduce modern sewerage services across our service area.",
+    description: "Enhance water access and expand infrastructure across our service area.",
     icon: "Building",
     objectives: [
       "Increase water coverage from 53% to 65%",
       "Rehabilitate aging water supply infrastructure",
-      "Develop foundational sewerage infrastructure",
+      "Expand water distribution network",
     ],
   },
   {

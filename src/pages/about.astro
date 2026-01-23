@@ -1,0 +1,243 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import { companyInfo, organizationalStructure } from "../data/company";
+import { Building, Users, Target, Award, Calendar, TrendingUp } from "lucide-react";
+---
+
+<BaseLayout
+  title="About Us"
+  description="Learn about ITWASCO - Iten Tambach Water and Sewerage Company. Our history, mission, vision, and organizational structure."
+>
+  <!-- Page Hero -->
+  <section class="bg-gradient-to-br from-primary-50 to-white py-16 sm:py-20">
+    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <div class="text-center">
+        <nav class="mb-4 text-sm text-gray-500">
+          <a href="/" class="hover:text-primary-600">Home</a>
+          <span class="mx-2">/</span>
+          <span class="text-gray-900">About Us</span>
+        </nav>
+        <h1 class="text-4xl font-bold tracking-tight text-gray-900 sm:text-5xl">
+          About ITWASCO
+        </h1>
+        <p class="mx-auto mt-4 max-w-2xl text-lg text-gray-600">
+          Learn about our journey, mission, and the team dedicated to serving Elgeyo Marakwet County with clean, reliable water.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Company Overview -->
+  <section class="py-16">
+    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <div class="grid gap-12 lg:grid-cols-2 lg:items-center">
+        <div>
+          <span class="inline-flex items-center rounded-full bg-primary-50 px-4 py-1.5 text-sm font-medium text-primary-600">
+            Our Story
+          </span>
+          <h2 class="mt-4 text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">
+            Corporate Overview
+          </h2>
+          <p class="mt-6 text-lg leading-relaxed text-gray-600">
+            {companyInfo.about.overview}
+          </p>
+          <p class="mt-4 text-lg leading-relaxed text-gray-600">
+            Our operations are strategically aligned with the national development blueprint, Kenya Vision 2030, and the County's agenda to ensure universal access to clean, affordable, and reliable water and sanitation.
+          </p>
+
+          <div class="mt-8 flex flex-wrap gap-4">
+            <div class="flex items-center gap-3 rounded-lg bg-primary-50 px-4 py-3">
+              <Calendar className="h-5 w-5 text-primary-600" />
+              <div>
+                <p class="text-xs text-gray-500">Incorporated</p>
+                <p class="font-semibold text-gray-900">July 2007</p>
+              </div>
+            </div>
+            <div class="flex items-center gap-3 rounded-lg bg-secondary-50 px-4 py-3">
+              <TrendingUp className="h-5 w-5 text-secondary-600" />
+              <div>
+                <p class="text-xs text-gray-500">Operational Since</p>
+                <p class="font-semibold text-gray-900">June 2008</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="relative">
+          <div class="aspect-square overflow-hidden rounded-2xl bg-gradient-to-br from-primary-100 to-primary-200 p-8">
+            <img
+              src="/images/logo/itwasco-logo.png"
+              alt="ITWASCO Logo"
+              class="h-full w-full object-contain"
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Mission, Vision, Values -->
+  <section class="bg-gray-50 py-16">
+    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <div class="grid gap-8 md:grid-cols-3">
+        <!-- Mission -->
+        <div class="rounded-2xl bg-white p-8 shadow-sm">
+          <div class="flex h-12 w-12 items-center justify-center rounded-xl bg-primary-100 text-primary-600">
+            <Target className="h-6 w-6" />
+          </div>
+          <h3 class="mt-4 text-xl font-bold text-gray-900">Our Mission</h3>
+          <p class="mt-3 text-gray-600">
+            {companyInfo.about.mission}
+          </p>
+        </div>
+
+        <!-- Vision -->
+        <div class="rounded-2xl bg-white p-8 shadow-sm">
+          <div class="flex h-12 w-12 items-center justify-center rounded-xl bg-secondary-100 text-secondary-600">
+            <Award className="h-6 w-6" />
+          </div>
+          <h3 class="mt-4 text-xl font-bold text-gray-900">Our Vision</h3>
+          <p class="mt-3 text-gray-600">
+            {companyInfo.about.vision}
+          </p>
+        </div>
+
+        <!-- Values -->
+        <div class="rounded-2xl bg-white p-8 shadow-sm">
+          <div class="flex h-12 w-12 items-center justify-center rounded-xl bg-accent-teal/20 text-accent-cyan">
+            <Users className="h-6 w-6" />
+          </div>
+          <h3 class="mt-4 text-xl font-bold text-gray-900">Our Values</h3>
+          <ul class="mt-3 space-y-2">
+            {companyInfo.values.slice(0, 4).map((value) => (
+              <li class="flex items-center gap-2 text-sm text-gray-600">
+                <svg class="h-4 w-4 text-secondary-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                </svg>
+                {value.name}
+              </li>
+            ))}
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Timeline -->
+  <section class="py-16" id="history">
+    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <div class="text-center">
+        <h2 class="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">
+          Our Journey
+        </h2>
+        <p class="mx-auto mt-4 max-w-2xl text-lg text-gray-600">
+          Key milestones in our growth and development
+        </p>
+      </div>
+
+      <div class="relative mt-12">
+        <!-- Timeline Line -->
+        <div class="absolute left-1/2 top-0 hidden h-full w-0.5 -translate-x-1/2 bg-primary-200 md:block"></div>
+
+        <div class="space-y-8">
+          {companyInfo.milestones.map((milestone, index) => (
+            <div class={`relative flex items-center gap-8 ${index % 2 === 0 ? 'md:flex-row' : 'md:flex-row-reverse'}`}>
+              <div class={`flex-1 ${index % 2 === 0 ? 'md:text-right' : 'md:text-left'}`}>
+                <div class="rounded-xl bg-white p-6 shadow-sm">
+                  <span class="text-sm font-semibold text-primary-600">{milestone.year}</span>
+                  <h3 class="mt-1 text-lg font-bold text-gray-900">{milestone.event}</h3>
+                  <p class="mt-2 text-sm text-gray-600">{milestone.description}</p>
+                </div>
+              </div>
+
+              <div class="absolute left-1/2 hidden h-4 w-4 -translate-x-1/2 rounded-full border-4 border-primary-500 bg-white md:block"></div>
+
+              <div class="hidden flex-1 md:block"></div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Organizational Structure -->
+  <section class="bg-gray-50 py-16" id="team">
+    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <div class="text-center">
+        <h2 class="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">
+          Organizational Structure
+        </h2>
+        <p class="mx-auto mt-4 max-w-2xl text-lg text-gray-600">
+          Our governance and management framework
+        </p>
+      </div>
+
+      <div class="mt-12">
+        <!-- Board -->
+        <div class="mx-auto max-w-md rounded-xl bg-primary-600 p-6 text-center text-white">
+          <Building className="mx-auto h-8 w-8" />
+          <h3 class="mt-2 text-lg font-bold">{organizationalStructure.board}</h3>
+        </div>
+
+        <!-- Committees -->
+        <div class="mt-8 grid gap-4 md:grid-cols-3">
+          {organizationalStructure.committees.map((committee) => (
+            <div class="rounded-xl bg-white p-4 text-center shadow-sm">
+              <p class="text-sm font-medium text-gray-900">{committee}</p>
+            </div>
+          ))}
+        </div>
+
+        <!-- Departments -->
+        <div class="mt-8">
+          <div class="mx-auto max-w-md rounded-xl bg-secondary-600 p-4 text-center text-white">
+            <h3 class="font-bold">Managing Director</h3>
+          </div>
+
+          <div class="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+            {organizationalStructure.departments.map((dept) => (
+              <div class="rounded-xl border border-gray-200 bg-white p-4 text-center">
+                <h4 class="font-semibold text-gray-900">{dept.name}</h4>
+                <p class="mt-1 text-sm text-gray-500">{dept.head}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        <!-- Org Chart Image -->
+        <div class="mt-12 text-center">
+          <a
+            href="/images/org-chart.png"
+            target="_blank"
+            class="inline-flex items-center gap-2 text-sm font-medium text-primary-600 hover:text-primary-700"
+          >
+            View Full Organizational Chart
+            <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+            </svg>
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="py-16">
+    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <div class="rounded-2xl bg-primary-600 px-8 py-12 text-center sm:px-12">
+        <h2 class="text-2xl font-bold text-white sm:text-3xl">
+          Want to Learn More?
+        </h2>
+        <p class="mx-auto mt-4 max-w-xl text-primary-100">
+          Explore our strategic plan to see how we're working towards a better future for water services in the region.
+        </p>
+        <a
+          href="/strategic-plan"
+          class="mt-6 inline-flex items-center justify-center rounded-lg bg-white px-6 py-3 font-semibold text-primary-600 transition-colors hover:bg-primary-50"
+        >
+          View Strategic Plan
+        </a>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

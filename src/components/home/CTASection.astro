@@ -1,0 +1,94 @@
+---
+import { companyInfo } from "../../data/company";
+import { Phone, Mail, MapPin } from "lucide-react";
+---
+
+<section class="py-16 sm:py-24">
+  <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+    <div class="relative overflow-hidden rounded-3xl bg-primary-600 px-6 py-16 shadow-2xl sm:px-16 sm:py-24 lg:px-24">
+      <!-- Background Pattern -->
+      <div class="absolute inset-0 opacity-10">
+        <svg class="h-full w-full" viewBox="0 0 100 100" preserveAspectRatio="none">
+          <defs>
+            <radialGradient id="radial" cx="50%" cy="50%" r="50%">
+              <stop offset="0%" stop-color="white" stop-opacity="0.3" />
+              <stop offset="100%" stop-color="white" stop-opacity="0" />
+            </radialGradient>
+          </defs>
+          <circle cx="80" cy="20" r="30" fill="url(#radial)" />
+          <circle cx="20" cy="80" r="40" fill="url(#radial)" />
+        </svg>
+      </div>
+
+      <div class="relative grid gap-12 lg:grid-cols-2 lg:gap-8">
+        <!-- Left: Content -->
+        <div>
+          <h2 class="text-3xl font-bold tracking-tight text-white sm:text-4xl">
+            Ready to Get Connected?
+          </h2>
+          <p class="mt-4 text-lg text-primary-100">
+            Join thousands of satisfied customers enjoying clean, reliable water supply. Contact us today to learn about our services and connection process.
+          </p>
+
+          <div class="mt-8 flex flex-col gap-4 sm:flex-row">
+            <a
+              href="/contact"
+              class="inline-flex items-center justify-center rounded-lg bg-white px-6 py-3 text-base font-semibold text-primary-600 shadow-sm transition-all hover:bg-primary-50"
+            >
+              Contact Us
+            </a>
+            <a
+              href="/services#connections"
+              class="inline-flex items-center justify-center rounded-lg border-2 border-white/30 bg-transparent px-6 py-3 text-base font-semibold text-white transition-all hover:bg-white/10"
+            >
+              Learn How to Connect
+            </a>
+          </div>
+        </div>
+
+        <!-- Right: Contact Info -->
+        <div class="lg:pl-8">
+          <div class="rounded-2xl bg-white/10 p-6 backdrop-blur-sm">
+            <h3 class="text-lg font-semibold text-white">Contact Information</h3>
+            <div class="mt-6 space-y-4">
+              <a
+                href={`tel:${companyInfo.contact.phone}`}
+                class="flex items-center gap-4 text-primary-100 transition-colors hover:text-white"
+              >
+                <div class="flex h-10 w-10 items-center justify-center rounded-full bg-white/10">
+                  <Phone className="h-5 w-5" />
+                </div>
+                <span class="font-medium">{companyInfo.contact.phone}</span>
+              </a>
+              <a
+                href={`mailto:${companyInfo.contact.email}`}
+                class="flex items-center gap-4 text-primary-100 transition-colors hover:text-white"
+              >
+                <div class="flex h-10 w-10 items-center justify-center rounded-full bg-white/10">
+                  <Mail className="h-5 w-5" />
+                </div>
+                <span class="font-medium">{companyInfo.contact.email}</span>
+              </a>
+              <div class="flex items-start gap-4 text-primary-100">
+                <div class="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-white/10">
+                  <MapPin className="h-5 w-5" />
+                </div>
+                <div>
+                  <p class="font-medium">{companyInfo.contact.address}</p>
+                  <p class="text-sm">{companyInfo.contact.poBox}, {companyInfo.contact.city}</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="mt-6 border-t border-white/10 pt-6">
+              <p class="text-sm text-primary-200">
+                <span class="font-medium text-white">Office Hours:</span><br />
+                {companyInfo.officeHours.weekdays}
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

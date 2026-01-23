@@ -1,0 +1,57 @@
+---
+import { navigationLinks } from "../../data/navigation";
+import MobileMenu from "./MobileMenu";
+
+const currentPath = Astro.url.pathname;
+---
+
+<header class="sticky top-0 z-50 w-full border-b border-gray-100 bg-white/95 backdrop-blur supports-[backdrop-filter]:bg-white/80">
+  <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+    <div class="flex h-16 items-center justify-between">
+      <!-- Logo -->
+      <a href="/" class="flex items-center gap-3">
+        <img
+          src="/images/logo/itwasco-logo.png"
+          alt="ITWASCO Logo"
+          width="48"
+          height="48"
+          class="h-12 w-auto"
+        />
+        <div class="hidden sm:block">
+          <span class="text-lg font-bold text-primary-600">ITWASCO</span>
+          <p class="text-xs text-gray-500">Water For All</p>
+        </div>
+      </a>
+
+      <!-- Desktop Navigation -->
+      <nav class="hidden md:flex md:items-center md:gap-1">
+        {navigationLinks.map((link) => (
+          <a
+            href={link.href}
+            class:list={[
+              "rounded-lg px-4 py-2 text-sm font-medium transition-colors",
+              currentPath === link.href
+                ? "bg-primary-50 text-primary-600"
+                : "text-gray-600 hover:bg-gray-50 hover:text-gray-900",
+            ]}
+          >
+            {link.name}
+          </a>
+        ))}
+      </nav>
+
+      <!-- CTA Button (Desktop) -->
+      <div class="hidden md:block">
+        <a
+          href="/contact"
+          class="inline-flex items-center justify-center rounded-lg bg-primary-500 px-5 py-2.5 text-sm font-medium text-white shadow-sm transition-all hover:bg-primary-600 hover:shadow-md"
+        >
+          Get Connected
+        </a>
+      </div>
+
+      <!-- Mobile Menu -->
+      <MobileMenu client:load currentPath={currentPath} />
+    </div>
+  </div>
+</header>

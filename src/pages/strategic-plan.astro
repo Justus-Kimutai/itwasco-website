@@ -1,0 +1,221 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import { strategicThemes, progressMetrics } from "../data/strategic-themes";
+import { Building, Gauge, Users, TrendingUp, Shield, Target } from "lucide-react";
+
+const iconMap = {
+  Building,
+  Gauge,
+  Users,
+  TrendingUp,
+  Shield,
+};
+---
+
+<BaseLayout
+  title="Strategic Plan"
+  description="ITWASCO Strategic Plan 2024 - Our roadmap for transformative growth in water service delivery for Elgeyo Marakwet County."
+>
+  <!-- Page Hero -->
+  <section class="bg-gradient-to-br from-secondary-800 to-secondary-900 py-16 text-white sm:py-20">
+    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <div class="text-center">
+        <nav class="mb-4 text-sm text-secondary-300">
+          <a href="/" class="hover:text-white">Home</a>
+          <span class="mx-2">/</span>
+          <span class="text-white">Strategic Plan</span>
+        </nav>
+        <span class="inline-flex items-center rounded-full bg-white/10 px-4 py-1.5 text-sm font-medium backdrop-blur-sm">
+          Vision 2024
+        </span>
+        <h1 class="mt-4 text-4xl font-bold tracking-tight sm:text-5xl">
+          Strategic Plan
+        </h1>
+        <p class="mx-auto mt-4 max-w-2xl text-lg text-secondary-200">
+          Our roadmap for transformative growth and excellence in water service delivery
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Five Strategic Themes -->
+  <section class="py-16">
+    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <div class="text-center">
+        <h2 class="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">
+          Five Core Strategic Themes
+        </h2>
+        <p class="mx-auto mt-4 max-w-2xl text-lg text-gray-600">
+          Our strategic plan is built around five key themes that guide our operations and growth.
+        </p>
+      </div>
+
+      <div class="mt-12 grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
+        {strategicThemes.map((theme) => {
+          const Icon = iconMap[theme.icon as keyof typeof iconMap];
+          return (
+            <div class="group relative overflow-hidden rounded-2xl border border-gray-100 bg-white p-6 transition-all hover:border-primary-100 hover:shadow-lg">
+              <div class="absolute right-0 top-0 h-32 w-32 -translate-y-8 translate-x-8 rounded-full bg-primary-50 transition-transform group-hover:scale-150"></div>
+
+              <div class="relative">
+                <div class="flex h-14 w-14 items-center justify-center rounded-xl bg-primary-100 text-primary-600">
+                  <span class="text-xl font-bold">{theme.id}</span>
+                </div>
+
+                <h3 class="mt-6 text-xl font-bold text-gray-900">
+                  {theme.title}
+                </h3>
+                <p class="mt-3 text-gray-600">
+                  {theme.description}
+                </p>
+
+                <div class="mt-6">
+                  <h4 class="text-sm font-semibold text-gray-900">Key Objectives:</h4>
+                  <ul class="mt-3 space-y-2">
+                    {theme.objectives.map((objective) => (
+                      <li class="flex items-start gap-2 text-sm text-gray-600">
+                        <svg class="mt-0.5 h-4 w-4 shrink-0 text-secondary-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                        </svg>
+                        {objective}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              </div>
+            </div>
+          );
+        })}
+      </div>
+    </div>
+  </section>
+
+  <!-- Progress Metrics -->
+  <section class="bg-gray-50 py-16">
+    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <div class="text-center">
+        <span class="inline-flex items-center rounded-full bg-primary-50 px-4 py-1.5 text-sm font-medium text-primary-600">
+          Key Performance Indicators
+        </span>
+        <h2 class="mt-4 text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">
+          Strategic Objectives for 2024
+        </h2>
+        <p class="mx-auto mt-4 max-w-2xl text-lg text-gray-600">
+          Measurable targets driving our strategic initiatives
+        </p>
+      </div>
+
+      <div class="mt-12 space-y-8">
+        {progressMetrics.map((metric) => {
+          const progress = metric.inverted
+            ? ((metric.current - metric.target) / (metric.current - (metric.target - 20))) * 100
+            : (metric.current / metric.target) * 100;
+
+          return (
+            <div class="rounded-xl bg-white p-6 shadow-sm">
+              <div class="flex flex-wrap items-center justify-between gap-4">
+                <div>
+                  <h3 class="text-lg font-semibold text-gray-900">{metric.label}</h3>
+                  <p class="mt-1 text-sm text-gray-500">
+                    {metric.inverted ? 'Reduce' : 'Increase'} from {metric.current}{metric.unit} to {metric.target}{metric.unit}
+                  </p>
+                </div>
+                <div class="text-right">
+                  <span class="text-2xl font-bold text-primary-600">{metric.current}{metric.unit}</span>
+                  <span class="mx-2 text-gray-400">→</span>
+                  <span class="text-2xl font-bold text-secondary-600">{metric.target}{metric.unit}</span>
+                </div>
+              </div>
+
+              <div class="mt-4">
+                <div class="h-3 overflow-hidden rounded-full bg-gray-100">
+                  <div
+                    class="h-full rounded-full bg-gradient-to-r from-primary-500 to-secondary-500 transition-all duration-1000"
+                    style={`width: ${Math.min(progress, 100)}%`}
+                  ></div>
+                </div>
+                <div class="mt-2 flex justify-between text-xs text-gray-500">
+                  <span>Current: {metric.current}{metric.unit}</span>
+                  <span>Target: {metric.target}{metric.unit}</span>
+                </div>
+              </div>
+            </div>
+          );
+        })}
+      </div>
+    </div>
+  </section>
+
+  <!-- Additional Objectives -->
+  <section class="py-16">
+    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <div class="grid gap-8 lg:grid-cols-2">
+        <div>
+          <h2 class="text-2xl font-bold text-gray-900">Key Strategic Objectives</h2>
+          <ul class="mt-6 space-y-4">
+            <li class="flex items-start gap-4 rounded-lg border border-gray-100 bg-white p-4">
+              <div class="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-primary-100 text-sm font-bold text-primary-600">1</div>
+              <div>
+                <h3 class="font-semibold text-gray-900">Increase Water Coverage</h3>
+                <p class="mt-1 text-sm text-gray-600">Expand water coverage from 53% to 65% of the population in our service area.</p>
+              </div>
+            </li>
+            <li class="flex items-start gap-4 rounded-lg border border-gray-100 bg-white p-4">
+              <div class="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-primary-100 text-sm font-bold text-primary-600">2</div>
+              <div>
+                <h3 class="font-semibold text-gray-900">Rehabilitate Infrastructure</h3>
+                <p class="mt-1 text-sm text-gray-600">Rehabilitate and modernize aging water supply infrastructure for improved service delivery.</p>
+              </div>
+            </li>
+            <li class="flex items-start gap-4 rounded-lg border border-gray-100 bg-white p-4">
+              <div class="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-primary-100 text-sm font-bold text-primary-600">3</div>
+              <div>
+                <h3 class="font-semibold text-gray-900">Develop Sewerage Infrastructure</h3>
+                <p class="mt-1 text-sm text-gray-600">Develop foundational sewerage infrastructure to serve urban centers.</p>
+              </div>
+            </li>
+          </ul>
+        </div>
+
+        <div>
+          <h2 class="text-2xl font-bold text-gray-900">Implementation Framework</h2>
+          <div class="mt-6 space-y-4">
+            <div class="rounded-xl bg-gradient-to-br from-primary-50 to-white p-6">
+              <Target className="h-8 w-8 text-primary-600" />
+              <h3 class="mt-3 font-semibold text-gray-900">Clear Institutional Framework</h3>
+              <p class="mt-2 text-sm text-gray-600">Defined roles, responsibilities, and accountability structures for effective implementation.</p>
+            </div>
+            <div class="rounded-xl bg-gradient-to-br from-secondary-50 to-white p-6">
+              <Gauge className="h-8 w-8 text-secondary-600" />
+              <h3 class="mt-3 font-semibold text-gray-900">Rigorous M&E System</h3>
+              <p class="mt-2 text-sm text-gray-600">Comprehensive Monitoring & Evaluation system to track progress and ensure accountability.</p>
+            </div>
+            <div class="rounded-xl bg-gradient-to-br from-gray-50 to-white p-6">
+              <Users className="h-8 w-8 text-gray-600" />
+              <h3 class="mt-3 font-semibold text-gray-900">Stakeholder Engagement</h3>
+              <p class="mt-2 text-sm text-gray-600">Participatory approach involving community, government, and development partners.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Kenya Vision 2030 Alignment -->
+  <section class="bg-primary-900 py-16 text-white">
+    <div class="mx-auto max-w-7xl px-4 text-center sm:px-6 lg:px-8">
+      <h2 class="text-2xl font-bold sm:text-3xl">
+        Aligned with Kenya Vision 2030
+      </h2>
+      <p class="mx-auto mt-4 max-w-2xl text-primary-200">
+        Our strategic plan supports the national development blueprint's goal of universal access to clean water and improved sanitation for all Kenyans.
+      </p>
+      <a
+        href="/contact"
+        class="mt-8 inline-flex items-center justify-center rounded-lg bg-white px-6 py-3 font-semibold text-primary-600 transition-colors hover:bg-primary-50"
+      >
+        Partner With Us
+      </a>
+    </div>
+  </section>
+</BaseLayout>

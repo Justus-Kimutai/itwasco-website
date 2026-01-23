@@ -1,0 +1,233 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import ContactForm from "../components/contact/ContactForm";
+import { companyInfo } from "../data/company";
+import { Mail, Phone, MapPin, Clock } from "lucide-react";
+---
+
+<BaseLayout
+  title="Contact Us"
+  description="Contact ITWASCO - Get in touch with us for water connections, billing inquiries, complaints, or general information. We're here to help."
+>
+  <!-- Page Hero -->
+  <section class="bg-gradient-to-br from-primary-50 to-white py-16 sm:py-20">
+    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <div class="text-center">
+        <nav class="mb-4 text-sm text-gray-500">
+          <a href="/" class="hover:text-primary-600">Home</a>
+          <span class="mx-2">/</span>
+          <span class="text-gray-900">Contact Us</span>
+        </nav>
+        <h1 class="text-4xl font-bold tracking-tight text-gray-900 sm:text-5xl">
+          Get in Touch
+        </h1>
+        <p class="mx-auto mt-4 max-w-2xl text-lg text-gray-600">
+          Have questions about our services? Need to apply for a water connection? We're here to help.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Contact Section -->
+  <section class="py-16">
+    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <div class="grid gap-12 lg:grid-cols-2">
+        <!-- Contact Form -->
+        <div>
+          <h2 class="text-2xl font-bold text-gray-900">Send us a Message</h2>
+          <p class="mt-2 text-gray-600">
+            Fill out the form below and we'll get back to you as soon as possible.
+          </p>
+          <div class="mt-8">
+            <ContactForm client:idle />
+          </div>
+        </div>
+
+        <!-- Contact Information -->
+        <div>
+          <h2 class="text-2xl font-bold text-gray-900">Contact Information</h2>
+          <p class="mt-2 text-gray-600">
+            You can also reach us through the following channels.
+          </p>
+
+          <div class="mt-8 space-y-6">
+            <!-- Phone -->
+            <div class="flex items-start gap-4">
+              <div class="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-primary-100 text-primary-600">
+                <Phone className="h-6 w-6" />
+              </div>
+              <div>
+                <h3 class="font-semibold text-gray-900">Phone</h3>
+                <a
+                  href={`tel:${companyInfo.contact.phone}`}
+                  class="mt-1 text-lg text-primary-600 hover:text-primary-700"
+                >
+                  {companyInfo.contact.phone}
+                </a>
+                <p class="mt-1 text-sm text-gray-500">Call us for immediate assistance</p>
+              </div>
+            </div>
+
+            <!-- Email -->
+            <div class="flex items-start gap-4">
+              <div class="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-secondary-100 text-secondary-600">
+                <Mail className="h-6 w-6" />
+              </div>
+              <div>
+                <h3 class="font-semibold text-gray-900">Email</h3>
+                <a
+                  href={`mailto:${companyInfo.contact.email}`}
+                  class="mt-1 text-lg text-primary-600 hover:text-primary-700"
+                >
+                  {companyInfo.contact.email}
+                </a>
+                <p class="mt-1 text-sm text-gray-500">We'll respond within 24-48 hours</p>
+              </div>
+            </div>
+
+            <!-- Address -->
+            <div class="flex items-start gap-4">
+              <div class="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-accent-teal/20 text-accent-cyan">
+                <MapPin className="h-6 w-6" />
+              </div>
+              <div>
+                <h3 class="font-semibold text-gray-900">Office Address</h3>
+                <p class="mt-1 text-gray-700">
+                  {companyInfo.contact.address}<br />
+                  {companyInfo.contact.poBox}<br />
+                  {companyInfo.contact.city}, {companyInfo.contact.county}
+                </p>
+              </div>
+            </div>
+
+            <!-- Office Hours -->
+            <div class="flex items-start gap-4">
+              <div class="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-gray-100 text-gray-600">
+                <Clock className="h-6 w-6" />
+              </div>
+              <div>
+                <h3 class="font-semibold text-gray-900">Office Hours</h3>
+                <div class="mt-2 space-y-1 text-sm text-gray-600">
+                  <p>{companyInfo.officeHours.weekdays}</p>
+                  <p>{companyInfo.officeHours.saturday}</p>
+                  <p>{companyInfo.officeHours.sunday}</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Google Map -->
+          <div class="mt-8">
+            <div class="overflow-hidden rounded-xl border border-gray-200">
+              <iframe
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d994.8629564227124!2d35.5066808939107!3d0.6681089643979778!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x1781169a6f17bd45%3A0x2f4c1361089b1831!2sItwasco%20Offices!5e1!3m2!1sen!2ske!4v1769140072108!5m2!1sen!2ske"
+                width="100%"
+                height="256"
+                style="border:0;"
+                allowfullscreen=""
+                loading="lazy"
+                referrerpolicy="no-referrer-when-downgrade"
+                title="ITWASCO Office Location"
+                class="w-full"
+              ></iframe>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ Section -->
+  <section class="bg-gray-50 py-16" id="faq">
+    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <div class="text-center">
+        <h2 class="text-2xl font-bold text-gray-900 sm:text-3xl">
+          Frequently Asked Questions
+        </h2>
+        <p class="mt-2 text-gray-600">
+          Quick answers to common questions
+        </p>
+      </div>
+
+      <div class="mx-auto mt-12 max-w-3xl space-y-4">
+        <details class="group rounded-xl bg-white p-6 shadow-sm">
+          <summary class="flex cursor-pointer items-center justify-between font-semibold text-gray-900">
+            How do I apply for a new water connection?
+            <svg class="h-5 w-5 shrink-0 text-gray-500 transition-transform group-open:rotate-180" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+            </svg>
+          </summary>
+          <p class="mt-4 text-gray-600">
+            Visit our office at the Water Treatment Works Compound in Iten with your National ID and proof of land ownership. Fill out the application form, and our team will schedule a site survey. After assessment, pay the connection fee and our technical team will install your connection.
+          </p>
+        </details>
+
+        <details class="group rounded-xl bg-white p-6 shadow-sm">
+          <summary class="flex cursor-pointer items-center justify-between font-semibold text-gray-900">
+            How can I pay my water bill?
+            <svg class="h-5 w-5 shrink-0 text-gray-500 transition-transform group-open:rotate-180" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+            </svg>
+          </summary>
+          <p class="mt-4 text-gray-600">
+            You can pay your water bill at our office in Iten during working hours. We accept cash and mobile money payments. Please bring your account number or latest bill for reference.
+          </p>
+        </details>
+
+        <details class="group rounded-xl bg-white p-6 shadow-sm">
+          <summary class="flex cursor-pointer items-center justify-between font-semibold text-gray-900">
+            What should I do if I have a water leak?
+            <svg class="h-5 w-5 shrink-0 text-gray-500 transition-transform group-open:rotate-180" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+            </svg>
+          </summary>
+          <p class="mt-4 text-gray-600">
+            If you notice a water leak, please contact us immediately at {companyInfo.contact.phone} or visit our office. For emergencies outside working hours, leave a message and we'll respond as soon as possible.
+          </p>
+        </details>
+
+        <details class="group rounded-xl bg-white p-6 shadow-sm">
+          <summary class="flex cursor-pointer items-center justify-between font-semibold text-gray-900">
+            What areas does ITWASCO serve?
+            <svg class="h-5 w-5 shrink-0 text-gray-500 transition-transform group-open:rotate-180" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+            </svg>
+          </summary>
+          <p class="mt-4 text-gray-600">
+            ITWASCO currently serves the urban centers of Iten and Tambach and their surrounding areas in Elgeyo Marakwet County. Our mandated service area covers 144 km², with active service in approximately 76 km².
+          </p>
+        </details>
+      </div>
+    </div>
+  </section>
+
+  <!-- Report Issue Section -->
+  <section class="py-16" id="report">
+    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <div class="rounded-2xl bg-primary-600 px-8 py-12 text-center text-white sm:px-12">
+        <h2 class="text-2xl font-bold sm:text-3xl">
+          Need to Report an Issue?
+        </h2>
+        <p class="mx-auto mt-4 max-w-xl text-primary-100">
+          For urgent water supply issues, leaks, or service interruptions, please contact us immediately.
+        </p>
+        <div class="mt-8 flex flex-col items-center justify-center gap-4 sm:flex-row">
+          <a
+            href={`tel:${companyInfo.contact.phone}`}
+            class="inline-flex items-center justify-center gap-2 rounded-lg bg-white px-6 py-3 font-semibold text-primary-600 transition-colors hover:bg-primary-50"
+          >
+            <Phone className="h-5 w-5" />
+            Call {companyInfo.contact.phone}
+          </a>
+          <a
+            href={`mailto:${companyInfo.contact.email}?subject=Service%20Issue%20Report`}
+            class="inline-flex items-center justify-center gap-2 rounded-lg border-2 border-white/30 bg-transparent px-6 py-3 font-semibold text-white transition-colors hover:bg-white/10"
+          >
+            <Mail className="h-5 w-5" />
+            Email Us
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

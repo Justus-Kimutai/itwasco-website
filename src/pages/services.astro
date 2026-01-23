@@ -1,0 +1,196 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import { services, connectionSteps } from "../data/services";
+import { Droplets, Waves, Building2, ShieldCheck, ArrowRight } from "lucide-react";
+
+const iconMap = {
+  Droplets,
+  Waves,
+  Building2,
+  ShieldCheck,
+};
+---
+
+<BaseLayout
+  title="Services"
+  description="ITWASCO services - Water supply, sewerage services, infrastructure development, and quality control for Elgeyo Marakwet County."
+>
+  <!-- Page Hero -->
+  <section class="bg-gradient-to-br from-primary-50 to-white py-16 sm:py-20">
+    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <div class="text-center">
+        <nav class="mb-4 text-sm text-gray-500">
+          <a href="/" class="hover:text-primary-600">Home</a>
+          <span class="mx-2">/</span>
+          <span class="text-gray-900">Services</span>
+        </nav>
+        <h1 class="text-4xl font-bold tracking-tight text-gray-900 sm:text-5xl">
+          Our Services
+        </h1>
+        <p class="mx-auto mt-4 max-w-2xl text-lg text-gray-600">
+          Comprehensive water and sanitation services for Iten, Tambach, and surrounding areas in Elgeyo Marakwet County.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Services Detail -->
+  <section class="py-16">
+    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <div class="space-y-24">
+        {services.map((service, index) => {
+          const Icon = iconMap[service.icon as keyof typeof iconMap];
+          return (
+            <div id={service.id} class={`scroll-mt-24 grid gap-12 lg:grid-cols-2 lg:items-center ${index % 2 === 1 ? 'lg:[direction:rtl]' : ''}`}>
+              <div class="text-center lg:text-left lg:[direction:ltr]">
+                <div class="mx-auto flex h-14 w-14 items-center justify-center rounded-xl bg-primary-100 text-primary-600 lg:mx-0">
+                  <Icon className="h-7 w-7" />
+                </div>
+                <h2 class="mt-6 text-3xl font-bold tracking-tight text-gray-900">
+                  {service.title}
+                </h2>
+                <p class="mt-4 text-lg text-gray-600">
+                  {service.description}
+                </p>
+
+                <ul class="mt-8 inline-block space-y-4 text-left">
+                  {service.features.map((feature) => (
+                    <li class="flex items-start gap-3">
+                      <div class="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-secondary-100">
+                        <svg class="h-4 w-4 text-secondary-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                        </svg>
+                      </div>
+                      <span class="text-gray-700">{feature}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+
+              <div class="lg:[direction:ltr]">
+                <div class="aspect-[4/3] overflow-hidden rounded-2xl shadow-lg">
+                  <img
+                    src={service.image}
+                    alt={service.title}
+                    class="h-full w-full object-cover"
+                    loading="lazy"
+                  />
+                </div>
+              </div>
+            </div>
+          );
+        })}
+      </div>
+    </div>
+  </section>
+
+  <!-- Coverage Area -->
+  <section class="bg-gray-50 py-16">
+    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <div class="text-center">
+        <h2 class="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">
+          Service Coverage Area
+        </h2>
+        <p class="mx-auto mt-4 max-w-2xl text-lg text-gray-600">
+          We serve the urban centers of Iten and Tambach and their surrounding environs.
+        </p>
+      </div>
+
+      <div class="mt-12 grid gap-8 md:grid-cols-3">
+        <div class="rounded-xl bg-white p-6 text-center shadow-sm">
+          <div class="text-4xl font-bold text-primary-600">144</div>
+          <div class="text-lg text-gray-600">km²</div>
+          <p class="mt-2 text-sm text-gray-500">Mandated Service Area</p>
+        </div>
+        <div class="rounded-xl bg-white p-6 text-center shadow-sm">
+          <div class="text-4xl font-bold text-secondary-600">76</div>
+          <div class="text-lg text-gray-600">km²</div>
+          <p class="mt-2 text-sm text-gray-500">Currently Active Area</p>
+        </div>
+        <div class="rounded-xl bg-white p-6 text-center shadow-sm">
+          <div class="text-4xl font-bold text-accent-cyan">90,000+</div>
+          <div class="text-lg text-gray-600">residents</div>
+          <p class="mt-2 text-sm text-gray-500">Target Population</p>
+        </div>
+      </div>
+
+      <div class="mt-8 text-center">
+        <p class="text-gray-600">
+          Main Service Areas: <span class="font-semibold text-gray-900">Iten Town</span> and <span class="font-semibold text-gray-900">Tambach</span>
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- How to Connect -->
+  <section class="py-16" id="connections">
+    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <div class="text-center">
+        <span class="inline-flex items-center rounded-full bg-secondary-50 px-4 py-1.5 text-sm font-medium text-secondary-600">
+          Get Started
+        </span>
+        <h2 class="mt-4 text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">
+          How to Get Connected
+        </h2>
+        <p class="mx-auto mt-4 max-w-2xl text-lg text-gray-600">
+          Follow these simple steps to get water connection to your property.
+        </p>
+      </div>
+
+      <div class="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+        {connectionSteps.map((step, index) => (
+          <div class="relative rounded-xl border border-gray-200 bg-white p-6">
+            <div class="flex h-10 w-10 items-center justify-center rounded-full bg-primary-600 text-lg font-bold text-white">
+              {step.step}
+            </div>
+            <h3 class="mt-4 text-lg font-semibold text-gray-900">
+              {step.title}
+            </h3>
+            <p class="mt-2 text-sm text-gray-600">
+              {step.description}
+            </p>
+
+            {index < connectionSteps.length - 1 && (
+              <div class="absolute -right-3 top-1/2 hidden -translate-y-1/2 lg:block">
+                <ArrowRight className="h-6 w-6 text-gray-300" />
+              </div>
+            )}
+          </div>
+        ))}
+      </div>
+
+      <div class="mt-12 rounded-xl bg-primary-50 p-8">
+        <h3 class="text-lg font-semibold text-gray-900">Documents Required</h3>
+        <ul class="mt-4 grid gap-3 sm:grid-cols-3">
+          <li class="flex items-center gap-2 text-gray-700">
+            <svg class="h-5 w-5 text-primary-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+            </svg>
+            National ID / Passport
+          </li>
+          <li class="flex items-center gap-2 text-gray-700">
+            <svg class="h-5 w-5 text-primary-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+            </svg>
+            Proof of Land Ownership
+          </li>
+          <li class="flex items-center gap-2 text-gray-700">
+            <svg class="h-5 w-5 text-primary-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+            </svg>
+            Completed Application Form
+          </li>
+        </ul>
+
+        <div class="mt-6">
+          <a
+            href="/contact"
+            class="inline-flex items-center justify-center rounded-lg bg-primary-600 px-6 py-3 font-medium text-white transition-colors hover:bg-primary-700"
+          >
+            Apply for Connection
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

@@ -1,0 +1,110 @@
+---
+import { companyInfo } from "../../data/company";
+---
+
+<section class="relative overflow-hidden">
+  <!-- Background Image -->
+  <div class="absolute inset-0">
+    <!-- Mobile image -->
+    <img
+      src="/images/hero/hero-bg-mobile.jpg"
+      alt=""
+      class="h-full w-full object-cover sm:hidden"
+      loading="eager"
+    />
+    <!-- Desktop image -->
+    <img
+      src="/images/hero/hero-bg.jpg"
+      alt=""
+      class="hidden h-full w-full object-cover sm:block"
+      loading="eager"
+    />
+    <!-- Dark overlay for text readability -->
+    <div class="absolute inset-0 bg-gradient-to-b from-primary-900/80 via-primary-900/70 to-primary-900/80"></div>
+  </div>
+
+  <!-- Background Pattern (subtle) -->
+  <div class="absolute inset-0 opacity-5">
+    <svg class="h-full w-full" viewBox="0 0 100 100" preserveAspectRatio="none">
+      <defs>
+        <pattern id="water-pattern" x="0" y="0" width="20" height="20" patternUnits="userSpaceOnUse">
+          <circle cx="10" cy="10" r="2" fill="currentColor" />
+        </pattern>
+      </defs>
+      <rect width="100" height="100" fill="url(#water-pattern)" />
+    </svg>
+  </div>
+
+  <!-- Animated Wave SVG at bottom -->
+  <div class="absolute -bottom-1 left-0 right-0 z-10">
+    <svg
+      viewBox="0 0 1440 120"
+      class="h-12 w-full fill-gray-50 sm:h-24"
+      preserveAspectRatio="none"
+    >
+      <path d="M0,64 C480,128 960,0 1440,64 L1440,120 L0,120 Z"></path>
+    </svg>
+  </div>
+
+  <div class="relative z-10 mx-auto max-w-7xl px-4 pb-24 pt-12 sm:px-6 sm:pb-28 sm:pt-16 lg:px-8 lg:pb-32 lg:pt-20">
+    <div class="flex flex-col items-center text-center">
+      <!-- Badge -->
+      <div class="mb-6 inline-flex items-center rounded-full bg-white/15 px-4 py-2 text-sm font-medium text-gray-100 backdrop-blur-sm shadow-lg" style="text-shadow: 0 1px 3px rgba(0,0,0,0.4);">
+        <span class="mr-2 inline-block h-2 w-2 rounded-full bg-secondary-400"></span>
+        Serving Elgeyo Marakwet County Since 2008
+      </div>
+
+      <!-- Heading -->
+      <h1 class="max-w-4xl text-4xl font-bold tracking-tight text-gray-100 sm:text-5xl lg:text-6xl" style="text-shadow: 0 2px 8px rgba(0,0,0,0.6), 0 4px 16px rgba(0,0,0,0.4);">
+        <span class="block text-accent-teal/90">{companyInfo.tagline}</span>
+        <span class="mt-2 block">
+          Sustainable Water &amp; Sanitation for Every Home
+        </span>
+      </h1>
+
+      <!-- Description -->
+      <p class="mt-6 max-w-2xl text-lg leading-relaxed text-gray-200 sm:text-xl" style="text-shadow: 0 2px 4px rgba(0,0,0,0.5), 0 4px 8px rgba(0,0,0,0.3);">
+        Providing sustainable water and sewerage services to Elgeyo Marakwet County. Wholly owned by the County Government, serving communities with clean, affordable, and reliable water since 2008.
+      </p>
+
+      <!-- CTA Buttons -->
+      <div class="mt-10 flex flex-col gap-4 sm:flex-row sm:gap-6">
+        <a
+          href="/services"
+          class="inline-flex items-center justify-center rounded-lg bg-white px-8 py-4 text-base font-semibold text-primary-600 shadow-lg transition-all hover:bg-primary-50 hover:shadow-xl"
+        >
+          Our Services
+          <svg class="ml-2 h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6" />
+          </svg>
+        </a>
+        <a
+          href="/contact"
+          class="inline-flex items-center justify-center rounded-lg border-2 border-white/30 bg-white/10 px-8 py-4 text-base font-semibold text-white backdrop-blur-sm transition-all hover:border-white/50 hover:bg-white/20"
+        >
+          Get Connected
+        </a>
+      </div>
+
+      <!-- Quick Stats -->
+      <div class="mt-8 grid grid-cols-2 gap-6 sm:mt-10 sm:grid-cols-4" style="text-shadow: 0 2px 4px rgba(0,0,0,0.5);">
+        <div class="text-center">
+          <div class="text-3xl font-bold text-gray-100 sm:text-4xl">3,330+</div>
+          <div class="mt-1 text-sm text-gray-300">Connections</div>
+        </div>
+        <div class="text-center">
+          <div class="text-3xl font-bold text-gray-100 sm:text-4xl">53%</div>
+          <div class="mt-1 text-sm text-gray-300">Coverage</div>
+        </div>
+        <div class="text-center">
+          <div class="text-3xl font-bold text-gray-100 sm:text-4xl">144km²</div>
+          <div class="mt-1 text-sm text-gray-300">Service Area</div>
+        </div>
+        <div class="text-center">
+          <div class="text-3xl font-bold text-gray-100 sm:text-4xl">17+</div>
+          <div class="mt-1 text-sm text-gray-300">Years of Service</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

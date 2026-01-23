@@ -1,0 +1,126 @@
+---
+import { footerLinks } from "../../data/navigation";
+import { companyInfo } from "../../data/company";
+import { Mail, Phone, MapPin } from "lucide-react";
+---
+
+<footer class="bg-gray-900 text-gray-300">
+  <div class="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8 lg:py-16">
+    <div class="grid grid-cols-1 gap-8 text-center md:text-left md:grid-cols-2 lg:grid-cols-4">
+      <!-- Company Info -->
+      <div class="border-b border-gray-800 pb-8 md:border-0 md:pb-0 lg:col-span-1">
+        <a href="/" class="inline-flex items-center gap-3 md:flex">
+          <img
+            src="/images/logo/itwasco-logo.png"
+            alt="ITWASCO Logo"
+            width="56"
+            height="56"
+            class="h-14 w-auto"
+          />
+        </a>
+        <p class="mt-4 text-sm leading-relaxed text-gray-400">
+          {companyInfo.shortName} - {companyInfo.tagline}. Providing sustainable water and sewerage services to Elgeyo Marakwet County.
+        </p>
+
+        <!-- Contact Info -->
+        <div class="mt-6 space-y-3">
+          <a
+            href={`mailto:${companyInfo.contact.email}`}
+            class="inline-flex items-center justify-center gap-3 text-sm text-gray-400 transition-colors hover:text-white md:justify-start"
+          >
+            <Mail class="h-4 w-4 text-primary-400" />
+            {companyInfo.contact.email}
+          </a>
+          <a
+            href={`tel:${companyInfo.contact.phone}`}
+            class="inline-flex items-center justify-center gap-3 text-sm text-gray-400 transition-colors hover:text-white md:justify-start"
+          >
+            <Phone class="h-4 w-4 text-primary-400" />
+            {companyInfo.contact.phone}
+          </a>
+          <div class="inline-flex items-start justify-center gap-3 text-sm text-gray-400 md:justify-start">
+            <MapPin class="mt-0.5 h-4 w-4 shrink-0 text-primary-400" />
+            <span class="text-left">
+              {companyInfo.contact.address}<br />
+              {companyInfo.contact.poBox}<br />
+              {companyInfo.contact.city}
+            </span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Services Links -->
+      <div class="border-b border-gray-800 pb-8 md:border-0 md:pb-0">
+        <h3 class="text-sm font-semibold uppercase tracking-wider text-white">Services</h3>
+        <ul class="mt-4 space-y-3">
+          {footerLinks.services.map((link) => (
+            <li>
+              <a
+                href={link.href}
+                class="text-sm text-gray-400 transition-colors hover:text-white"
+              >
+                {link.name}
+              </a>
+            </li>
+          ))}
+        </ul>
+      </div>
+
+      <!-- Company Links -->
+      <div class="border-b border-gray-800 pb-8 md:border-0 md:pb-0">
+        <h3 class="text-sm font-semibold uppercase tracking-wider text-white">Company</h3>
+        <ul class="mt-4 space-y-3">
+          {footerLinks.company.map((link) => (
+            <li>
+              <a
+                href={link.href}
+                class="text-sm text-gray-400 transition-colors hover:text-white"
+              >
+                {link.name}
+              </a>
+            </li>
+          ))}
+        </ul>
+      </div>
+
+      <!-- Support Links -->
+      <div>
+        <h3 class="text-sm font-semibold uppercase tracking-wider text-white">Support</h3>
+        <ul class="mt-4 space-y-3">
+          {footerLinks.support.map((link) => (
+            <li>
+              <a
+                href={link.href}
+                class="text-sm text-gray-400 transition-colors hover:text-white"
+              >
+                {link.name}
+              </a>
+            </li>
+          ))}
+        </ul>
+
+        <!-- Office Hours -->
+        <div class="mt-6">
+          <h4 class="text-sm font-semibold text-white">Office Hours</h4>
+          <p class="mt-2 text-xs text-gray-400">
+            {companyInfo.officeHours.weekdays}<br />
+            {companyInfo.officeHours.saturday}<br />
+            {companyInfo.officeHours.sunday}
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Bottom Bar -->
+    <div class="mt-12 border-t border-gray-800 pt-8">
+      <div class="flex flex-col items-center justify-between gap-4 sm:flex-row">
+        <p class="text-sm text-gray-400">
+          &copy; {new Date().getFullYear()} {companyInfo.name}. All rights reserved.
+        </p>
+        <p class="text-xs text-gray-500">
+          A public utility owned by Elgeyo Marakwet County Government
+        </p>
+      </div>
+    </div>
+  </div>
+</footer>

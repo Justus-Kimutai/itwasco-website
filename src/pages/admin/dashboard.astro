@@ -261,6 +261,80 @@ const updated = Astro.url.searchParams.get("updated") === "true";
         padding: 0.75rem;
       }
     }
+
+    /* Custom Modal */
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.5);
+      backdrop-filter: blur(4px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 1000;
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.2s, visibility 0.2s;
+      padding: 1rem;
+    }
+    .modal-overlay.active {
+      opacity: 1;
+      visibility: visible;
+    }
+    .modal {
+      background: white;
+      border-radius: 1rem;
+      padding: 2rem;
+      max-width: 400px;
+      width: 100%;
+      text-align: center;
+      transform: scale(0.9);
+      transition: transform 0.2s;
+      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+    }
+    .modal-overlay.active .modal {
+      transform: scale(1);
+    }
+    .modal-icon {
+      margin-bottom: 1rem;
+    }
+    .modal-title {
+      font-size: 1.25rem;
+      font-weight: 600;
+      color: #1f2937;
+      margin-bottom: 0.5rem;
+    }
+    .modal-message {
+      color: #6b7280;
+      font-size: 0.95rem;
+      margin-bottom: 1.5rem;
+      line-height: 1.5;
+    }
+    .modal-message span {
+      font-weight: 600;
+      color: #1f2937;
+    }
+    .modal-actions {
+      display: flex;
+      gap: 0.75rem;
+      justify-content: center;
+    }
+    .modal-actions .btn {
+      min-width: 100px;
+      justify-content: center;
+    }
+
+    @media (max-width: 640px) {
+      .modal {
+        padding: 1.5rem;
+      }
+      .modal-actions {
+        flex-direction: column-reverse;
+      }
+      .modal-actions .btn {
+        width: 100%;
+      }
+    }
   </style>
 </head>
 <body>
@@ -325,16 +399,66 @@ const updated = Astro.url.searchParams.get("updated") === "true";
             </div>
             <div class="post-actions">
               <a href={`/admin/edit/${post.id}`} class="btn btn-secondary">Edit</a>
-              <form method="POST" style="display: inline" onsubmit="return confirm('Are you sure you want to delete this post?')">
-                <input type="hidden" name="action" value="delete" />
-                <input type="hidden" name="postId" value={post.id} />
-                <button type="submit" class="btn btn-danger">Delete</button>
-              </form>
+              <button type="button" class="btn btn-danger delete-btn" data-id={post.id} data-title={post.title}>Delete</button>
             </div>
           </div>
         ))}
       </div>
     )}
   </div>
+
+  <!-- Delete Confirmation Modal -->
+  <div id="deleteModal" class="modal-overlay">
+    <div class="modal">
+      <div class="modal-icon">
+        <svg width="48" height="48" fill="none" viewBox="0 0 24 24" stroke="#dc2626" stroke-width="1.5">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+        </svg>
+      </div>
+      <h3 class="modal-title">Delete Post</h3>
+      <p class="modal-message">Are you sure you want to delete "<span id="deletePostTitle"></span>"? This action cannot be undone.</p>
+      <div class="modal-actions">
+        <button type="button" class="btn btn-secondary" id="cancelDelete">Cancel</button>
+        <form method="POST" id="deleteForm" style="display: inline;">
+          <input type="hidden" name="action" value="delete" />
+          <input type="hidden" name="postId" id="deletePostId" value="" />
+          <button type="submit" class="btn btn-danger">Delete</button>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const modal = document.getElementById('deleteModal');
+    const deletePostTitle = document.getElementById('deletePostTitle');
+    const deletePostId = document.getElementById('deletePostId');
+    const cancelBtn = document.getElementById('cancelDelete');
+
+    document.querySelectorAll('.delete-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const id = btn.dataset.id;
+        const title = btn.dataset.title;
+        deletePostTitle.textContent = title;
+        deletePostId.value = id;
+        modal.classList.add('active');
+      });
+    });
+
+    cancelBtn?.addEventListener('click', () => {
+      modal.classList.remove('active');
+    });
+
+    modal?.addEventListener('click', (e) => {
+      if (e.target === modal) {
+        modal.classList.remove('active');
+      }
+    });
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && modal.classList.contains('active')) {
+        modal.classList.remove('active');
+      }
+    });
+  </script>
 </body>
 </html>

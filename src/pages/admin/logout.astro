@@ -1,0 +1,10 @@
+---
+// Logout handler - clears session cookie
+return new Response(null, {
+  status: 302,
+  headers: {
+    "Location": "/admin",
+    "Set-Cookie": "admin_session=; Path=/; HttpOnly; Max-Age=0"
+  }
+});
+---

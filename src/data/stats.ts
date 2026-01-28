@@ -1,7 +1,7 @@
 export const companyStats = [
   {
-    value: 3750,
-    label: "Active Connections",
+    value: 4750,
+    label: "Connections",
     suffix: "+",
     description: "Households and businesses served",
   },

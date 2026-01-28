@@ -6,7 +6,7 @@ export const companyInfo = {
   contact: {
     email: "infoitwasco@gmail.com",
     phone: "0743286720",
-    address: "Water Treatment Works Compound",
+    address: "Water Treatment Works behond Posta Iten",
     poBox: "P.O Box 700-30700",
     city: "ITEN",
     county: "Elgeyo Marakwet County",

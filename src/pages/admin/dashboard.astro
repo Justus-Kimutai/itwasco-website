@@ -1,0 +1,279 @@
+---
+import { isAuthenticated } from "../../lib/auth";
+import { getAllPosts, deletePost } from "../../lib/supabase";
+
+// Check authentication
+if (!isAuthenticated(Astro.request)) {
+  return Astro.redirect("/admin");
+}
+
+// Handle delete action
+if (Astro.request.method === "POST") {
+  const formData = await Astro.request.formData();
+  const action = formData.get("action");
+  const postId = formData.get("postId");
+  
+  if (action === "delete" && postId) {
+    await deletePost(Number(postId));
+    return Astro.redirect("/admin/dashboard?deleted=true");
+  }
+}
+
+// Get all posts
+const posts = await getAllPosts();
+const deleted = Astro.url.searchParams.get("deleted") === "true";
+const created = Astro.url.searchParams.get("created") === "true";
+const updated = Astro.url.searchParams.get("updated") === "true";
+---
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dashboard | ITWASCO Admin</title>
+  <link rel="icon" type="image/png" href="/images/logo/itwasco-logo-small.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Inter', sans-serif;
+      background: #f3f4f6;
+      min-height: 100vh;
+    }
+    .header {
+      background: white;
+      border-bottom: 1px solid #e5e7eb;
+      padding: 1rem 1.5rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .header-left {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+    .header-left img {
+      height: 40px;
+    }
+    .header-left h1 {
+      font-size: 1.25rem;
+      color: #1f2937;
+    }
+    .header-right {
+      display: flex;
+      gap: 1rem;
+      align-items: center;
+    }
+    .btn {
+      padding: 0.5rem 1rem;
+      border-radius: 0.5rem;
+      font-size: 0.875rem;
+      font-weight: 500;
+      text-decoration: none;
+      cursor: pointer;
+      border: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    .btn-primary {
+      background: #0284c7;
+      color: white;
+    }
+    .btn-primary:hover { background: #0369a1; }
+    .btn-secondary {
+      background: #e5e7eb;
+      color: #374151;
+    }
+    .btn-secondary:hover { background: #d1d5db; }
+    .btn-danger {
+      background: #dc2626;
+      color: white;
+    }
+    .btn-danger:hover { background: #b91c1c; }
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 2rem 1.5rem;
+    }
+    .page-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 2rem;
+    }
+    .page-title {
+      font-size: 1.5rem;
+      font-weight: 600;
+      color: #1f2937;
+    }
+    .alert {
+      padding: 1rem;
+      border-radius: 0.5rem;
+      margin-bottom: 1.5rem;
+    }
+    .alert-success {
+      background: #dcfce7;
+      color: #166534;
+      border: 1px solid #bbf7d0;
+    }
+    .posts-grid {
+      display: grid;
+      gap: 1rem;
+    }
+    .post-card {
+      background: white;
+      border-radius: 0.75rem;
+      padding: 1.25rem;
+      display: flex;
+      gap: 1rem;
+      align-items: flex-start;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    }
+    .post-image {
+      width: 120px;
+      height: 80px;
+      border-radius: 0.5rem;
+      object-fit: cover;
+      background: #e5e7eb;
+      flex-shrink: 0;
+    }
+    .post-content {
+      flex: 1;
+      min-width: 0;
+    }
+    .post-title {
+      font-size: 1rem;
+      font-weight: 600;
+      color: #1f2937;
+      margin-bottom: 0.25rem;
+    }
+    .post-excerpt {
+      font-size: 0.875rem;
+      color: #6b7280;
+      margin-bottom: 0.5rem;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+    .post-meta {
+      font-size: 0.75rem;
+      color: #9ca3af;
+    }
+    .post-status {
+      display: inline-block;
+      padding: 0.25rem 0.5rem;
+      border-radius: 9999px;
+      font-size: 0.75rem;
+      font-weight: 500;
+    }
+    .status-published {
+      background: #dcfce7;
+      color: #166534;
+    }
+    .status-draft {
+      background: #fef3c7;
+      color: #92400e;
+    }
+    .post-actions {
+      display: flex;
+      gap: 0.5rem;
+      flex-shrink: 0;
+    }
+    .empty-state {
+      text-align: center;
+      padding: 4rem 2rem;
+      background: white;
+      border-radius: 0.75rem;
+    }
+    .empty-state h3 {
+      font-size: 1.25rem;
+      color: #374151;
+      margin-bottom: 0.5rem;
+    }
+    .empty-state p {
+      color: #6b7280;
+      margin-bottom: 1.5rem;
+    }
+  </style>
+</head>
+<body>
+  <header class="header">
+    <div class="header-left">
+      <img src="/images/logo/itwasco-logo.png" alt="ITWASCO" />
+      <h1>Admin Dashboard</h1>
+    </div>
+    <div class="header-right">
+      <a href="/" class="btn btn-secondary">View Site</a>
+      <a href="/admin/logout" class="btn btn-secondary">Logout</a>
+    </div>
+  </header>
+
+  <div class="container">
+    <div class="page-header">
+      <h2 class="page-title">Blog Posts</h2>
+      <a href="/admin/new" class="btn btn-primary">
+        <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4" />
+        </svg>
+        New Post
+      </a>
+    </div>
+
+    {deleted && (
+      <div class="alert alert-success">Post deleted successfully!</div>
+    )}
+    {created && (
+      <div class="alert alert-success">Post created successfully!</div>
+    )}
+    {updated && (
+      <div class="alert alert-success">Post updated successfully!</div>
+    )}
+
+    {posts.length === 0 ? (
+      <div class="empty-state">
+        <h3>No blog posts yet</h3>
+        <p>Create your first blog post to get started.</p>
+        <a href="/admin/new" class="btn btn-primary">Create Post</a>
+      </div>
+    ) : (
+      <div class="posts-grid">
+        {posts.map((post) => (
+          <div class="post-card">
+            <img 
+              src={post.image_url || "/images/placeholder.jpg"} 
+              alt={post.title}
+              class="post-image"
+            />
+            <div class="post-content">
+              <h3 class="post-title">{post.title}</h3>
+              <p class="post-excerpt">{post.excerpt}</p>
+              <div class="post-meta">
+                <span class={`post-status ${post.published ? 'status-published' : 'status-draft'}`}>
+                  {post.published ? 'Published' : 'Draft'}
+                </span>
+                <span style="margin-left: 0.75rem">
+                  {new Date(post.created_at || '').toLocaleDateString()}
+                </span>
+              </div>
+            </div>
+            <div class="post-actions">
+              <a href={`/admin/edit/${post.id}`} class="btn btn-secondary">Edit</a>
+              <form method="POST" style="display: inline" onsubmit="return confirm('Are you sure you want to delete this post?')">
+                <input type="hidden" name="action" value="delete" />
+                <input type="hidden" name="postId" value={post.id} />
+                <button type="submit" class="btn btn-danger">Delete</button>
+              </form>
+            </div>
+          </div>
+        ))}
+      </div>
+    )}
+  </div>
+</body>
+</html>

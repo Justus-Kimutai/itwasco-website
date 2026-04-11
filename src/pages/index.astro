@@ -6,6 +6,7 @@ import ServicesPreview from "../components/home/ServicesPreview.astro";
 import MissionStatement from "../components/home/MissionStatement.astro";
 import CTASection from "../components/home/CTASection.astro";
 import BlogTeaser from "../components/home/BlogTeaser.astro";
+import TenderAlert from "../components/home/TenderAlert.astro";
 ---
 
 <BaseLayout
@@ -13,6 +14,7 @@ import BlogTeaser from "../components/home/BlogTeaser.astro";
   description="ITWASCO - Iten Tambach Water and Sewerage Company. Providing sustainable water services to Elgeyo Marakwet County, Kenya. Water for all."
 >
   <Hero />
+  <TenderAlert />
   <StatsCounter client:visible />
   <ServicesPreview />
   <MissionStatement />

@@ -1,0 +1,76 @@
+---
+const tender = {
+  title: "Request for Quotation: Supply & Installation of Water Meters",
+  quotationNo: "ITWASCO/WSTF-UPC8/QT/02/2026",
+  item: "748 No. S150P Single-Jet Mechanical Domestic Water Meter DN 15MM",
+  closingDate: "Monday, 20th April 2026",
+  closingTime: "12:00 Noon",
+  documentUrl: "/documents/RFQ-WSTF-METERS.pdf",
+  tendersUrl: "/tenders",
+};
+---
+
+<section class="bg-amber-50 border-y-2 border-amber-400 py-6 sm:py-8">
+  <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+    <div class="flex flex-col gap-5 sm:flex-row sm:items-center sm:justify-between">
+
+      <!-- Icon + Text -->
+      <div class="flex items-start gap-4">
+        <!-- Bell icon -->
+        <div class="flex h-11 w-11 flex-shrink-0 items-center justify-center rounded-full bg-amber-400 shadow">
+          <svg class="h-6 w-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+              d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" />
+          </svg>
+        </div>
+
+        <div>
+          <div class="flex flex-wrap items-center gap-2">
+            <span class="inline-flex items-center gap-1.5 rounded-full bg-amber-400 px-2.5 py-0.5 text-xs font-bold uppercase tracking-wide text-white">
+              <span class="h-1.5 w-1.5 animate-pulse rounded-full bg-white"></span>
+              Active Tender
+            </span>
+            <span class="text-xs text-amber-700 font-mono">{tender.quotationNo}</span>
+          </div>
+
+          <h3 class="mt-1 text-base font-bold text-gray-900 sm:text-lg">
+            {tender.title}
+          </h3>
+          <p class="mt-0.5 text-sm text-gray-700">{tender.item}</p>
+
+          <p class="mt-1.5 flex flex-wrap items-center gap-x-3 gap-y-1 text-sm">
+            <span class="font-semibold text-red-600">
+              Closing: {tender.closingDate} at {tender.closingTime}
+            </span>
+          </p>
+        </div>
+      </div>
+
+      <!-- Actions -->
+      <div class="flex flex-shrink-0 flex-wrap gap-3 sm:flex-col sm:items-end lg:flex-row">
+        <a
+          href={tender.documentUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+          class="inline-flex items-center gap-2 rounded-lg bg-amber-500 px-5 py-2.5 text-sm font-semibold text-white shadow transition-colors hover:bg-amber-600"
+        >
+          <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+              d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+          </svg>
+          Download RFQ
+        </a>
+        <a
+          href={tender.tendersUrl}
+          class="inline-flex items-center gap-2 rounded-lg border-2 border-amber-500 bg-white px-5 py-2.5 text-sm font-semibold text-amber-700 transition-colors hover:bg-amber-50"
+        >
+          View Details
+          <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+          </svg>
+        </a>
+      </div>
+
+    </div>
+  </div>
+</section>

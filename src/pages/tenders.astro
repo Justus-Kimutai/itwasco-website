@@ -1,0 +1,213 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+
+const tenders = [
+  {
+    id: 1,
+    quotationNo: "ITWASCO/WSTF-UPC8/QT/02/2026",
+    title: "Supply and Installation of S150P Single-Jet Mechanical Domestic Water Meter",
+    description: "ITWASCO invites qualified firms to submit quotations for the supply and installation of S150P Single-Jet Mechanical Domestic Water Meter DN 15MM — 748 units or equivalent, funded under the WSTF Urban Piped Component (UPC8) programme.",
+    closingDate: "2026-04-20",
+    closingTime: "12:00 Noon (Kenya Time)",
+    status: "open",
+    category: "Supply & Installation",
+    quantity: "748 No.",
+    item: "S150P Single-Jet Mechanical Domestic Water Meter DN 15MM",
+    addressTo: "Managing Director, Iten Tambach Water and Sewerage Co. Ltd., P.O. Box 700-30700, Iten.",
+    physicalAddress: "Behind AIC Iten, Old Treatment Works",
+    documentUrl: "/documents/RFQ-WSTF-METERS.pdf",
+    postedDate: "2026-04-11",
+  },
+];
+
+function getStatusBadge(status: string, closingDate: string) {
+  const now = new Date();
+  const closing = new Date(closingDate);
+  if (status === "closed" || closing < now) return { label: "Closed", classes: "bg-red-100 text-red-700" };
+  const daysLeft = Math.ceil((closing.getTime() - now.getTime()) / (1000 * 60 * 60 * 24));
+  if (daysLeft <= 5) return { label: `Closing Soon (${daysLeft}d)`, classes: "bg-amber-100 text-amber-700" };
+  return { label: "Open", classes: "bg-green-100 text-green-700" };
+}
+---
+
+<BaseLayout
+  title="Tenders & Procurement"
+  description="Active tenders and procurement notices from ITWASCO - Iten Tambach Water and Sewerage Company. View current Requests for Quotation and Tender Documents."
+>
+  <!-- Page Hero -->
+  <section class="bg-gradient-to-br from-primary-50 to-white py-8 sm:py-16">
+    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <div class="text-center">
+        <nav class="mb-2 sm:mb-4 text-sm text-gray-500">
+          <a href="/" class="hover:text-primary-600">Home</a>
+          <span class="mx-2">/</span>
+          <span class="text-gray-900">Tenders & Procurement</span>
+        </nav>
+        <h1 class="text-3xl font-bold tracking-tight text-gray-900 sm:text-5xl">
+          Tenders & Procurement
+        </h1>
+        <p class="mx-auto mt-2 sm:mt-4 max-w-2xl text-base sm:text-lg text-gray-600">
+          Active procurement notices and Requests for Quotation from ITWASCO. All tenders are conducted in accordance with Kenya's Public Procurement and Asset Disposal Act, 2015.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Notice Banner -->
+  <section class="border-y border-amber-200 bg-amber-50 py-4">
+    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <div class="flex items-start gap-3 text-sm text-amber-800">
+        <svg class="mt-0.5 h-5 w-5 flex-shrink-0 text-amber-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+        </svg>
+        <p>
+          <strong>Important:</strong> This invitation is not transferable. Submissions must be in sealed envelopes clearly marked with the Quotation Reference Number, Tenderer's name, and the Procuring Entity's name. Late quotations will be rejected.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Tenders List -->
+  <section class="py-10 sm:py-16">
+    <div class="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
+
+      {tenders.length === 0 ? (
+        <div class="rounded-xl border-2 border-dashed border-gray-200 p-12 text-center">
+          <svg class="mx-auto h-12 w-12 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+          </svg>
+          <h3 class="mt-4 text-lg font-semibold text-gray-900">No Active Tenders</h3>
+          <p class="mt-2 text-gray-500">Check back soon for upcoming procurement opportunities.</p>
+        </div>
+      ) : (
+        <div class="space-y-8">
+          {tenders.map((tender) => {
+            const badge = getStatusBadge(tender.status, tender.closingDate);
+            const closingDateFormatted = new Date(tender.closingDate).toLocaleDateString('en-KE', {
+              weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'
+            });
+            const postedDateFormatted = new Date(tender.postedDate).toLocaleDateString('en-KE', {
+              year: 'numeric', month: 'long', day: 'numeric'
+            });
+            return (
+              <article class="overflow-hidden rounded-2xl border border-gray-200 bg-white shadow-sm">
+                <!-- Header -->
+                <div class="border-b border-gray-100 bg-gray-50 px-6 py-4 sm:px-8">
+                  <div class="flex flex-wrap items-center justify-between gap-3">
+                    <div class="flex flex-wrap items-center gap-3">
+                      <span class={`inline-flex items-center rounded-full px-3 py-1 text-xs font-semibold ${badge.classes}`}>
+                        {badge.label}
+                      </span>
+                      <span class="inline-flex items-center rounded-full bg-blue-100 px-3 py-1 text-xs font-semibold text-blue-700">
+                        {tender.category}
+                      </span>
+                    </div>
+                    <span class="text-xs text-gray-500">Posted: {postedDateFormatted}</span>
+                  </div>
+                </div>
+
+                <!-- Body -->
+                <div class="px-6 py-6 sm:px-8">
+                  <p class="mb-1 text-xs font-mono text-gray-500">{tender.quotationNo}</p>
+                  <h2 class="mb-3 text-xl font-bold text-gray-900 sm:text-2xl">
+                    {tender.title}
+                  </h2>
+                  <p class="mb-6 text-gray-600">{tender.description}</p>
+
+                  <!-- Details Grid -->
+                  <div class="mb-6 grid gap-4 sm:grid-cols-2">
+                    <div class="rounded-lg bg-gray-50 p-4">
+                      <p class="mb-1 text-xs font-semibold uppercase tracking-wide text-gray-500">Item</p>
+                      <p class="text-sm font-medium text-gray-900">{tender.item}</p>
+                    </div>
+                    <div class="rounded-lg bg-gray-50 p-4">
+                      <p class="mb-1 text-xs font-semibold uppercase tracking-wide text-gray-500">Quantity</p>
+                      <p class="text-sm font-medium text-gray-900">{tender.quantity}</p>
+                    </div>
+                    <div class="rounded-lg bg-red-50 p-4 sm:col-span-2">
+                      <p class="mb-1 text-xs font-semibold uppercase tracking-wide text-red-600">Closing Deadline</p>
+                      <p class="text-sm font-bold text-red-700">{closingDateFormatted} at {tender.closingTime}</p>
+                    </div>
+                  </div>
+
+                  <!-- Submission Address -->
+                  <div class="mb-6 rounded-lg border border-gray-200 p-4">
+                    <p class="mb-2 text-xs font-semibold uppercase tracking-wide text-gray-500">Submit Quotations To</p>
+                    <p class="text-sm text-gray-700">{tender.addressTo}</p>
+                    <p class="mt-1 text-sm text-gray-500">Physical: {tender.physicalAddress}</p>
+                  </div>
+
+                  <!-- Eligibility Requirements -->
+                  <div class="mb-6">
+                    <p class="mb-3 text-sm font-semibold text-gray-700">Required Documents</p>
+                    <ul class="grid gap-2 text-sm text-gray-600 sm:grid-cols-2">
+                      {[
+                        "Certificate of Registration/Incorporation",
+                        "KRA PIN Certificate",
+                        "Valid Tax Compliance Certificate",
+                        "Current CR 12",
+                        "Valid Business/Trading License",
+                        "Bank Statement (min. 3 months)",
+                        "AGPO Certificate (if applicable)",
+                        "Power of Attorney (if applicable)",
+                      ].map((doc) => (
+                        <li class="flex items-start gap-2">
+                          <svg class="mt-0.5 h-4 w-4 flex-shrink-0 text-primary-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                          </svg>
+                          {doc}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+
+                  <!-- Actions -->
+                  <div class="flex flex-wrap gap-3">
+                    <a
+                      href={tender.documentUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      class="inline-flex items-center gap-2 rounded-lg bg-primary-600 px-5 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-primary-700"
+                    >
+                      <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                      </svg>
+                      Download RFQ Document
+                    </a>
+                    <a
+                      href="/contact"
+                      class="inline-flex items-center gap-2 rounded-lg border border-gray-300 bg-white px-5 py-2.5 text-sm font-semibold text-gray-700 transition-colors hover:bg-gray-50"
+                    >
+                      <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                      </svg>
+                      Enquiries
+                    </a>
+                  </div>
+                </div>
+              </article>
+            );
+          })}
+        </div>
+      )}
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="py-16">
+    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <div class="rounded-2xl bg-primary-600 px-8 py-12 text-center sm:px-12">
+        <h2 class="text-2xl font-bold text-white sm:text-3xl">Questions About This Tender?</h2>
+        <p class="mx-auto mt-4 max-w-xl text-primary-100">
+          Contact the Managing Director's office during office hours (08:00–17:00) for any enquiries regarding active procurement.
+        </p>
+        <a
+          href="/contact"
+          class="mt-6 inline-flex items-center justify-center rounded-lg bg-white px-6 py-3 font-semibold text-primary-600 transition-colors hover:bg-primary-50"
+        >
+          Contact Us
+        </a>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

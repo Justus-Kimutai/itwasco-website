@@ -3,6 +3,7 @@ export const navigationLinks = [
   { name: "About", href: "/about" },
   { name: "Services", href: "/services" },
   { name: "Blog", href: "/blog" },
+  { name: "Tenders", href: "/tenders" },
   { name: "Strategic Plan", href: "/strategic-plan" },
   { name: "Contact", href: "/contact" },
 ] as const;
@@ -16,6 +17,7 @@ export const footerLinks = {
     { name: "About Us", href: "/about" },
     { name: "Our Team", href: "/about#team" },
     { name: "Strategic Plan", href: "/strategic-plan" },
+    { name: "Tenders", href: "/tenders" },
   ],
   support: [
     { name: "Contact Us", href: "/contact" },

@@ -14,16 +14,17 @@ const tender = {
   closingTime: "12:00 Noon (Kenya Time)",
   documentUrl: "/documents/RFQ-WSTF-METERS.pdf",
   tendersUrl: "/tenders",
+  // ISO string passed to client-side countdown
+  deadlineISO: deadline.toISOString(),
 };
 ---
 
-<section class="bg-amber-50 border-y-2 border-amber-400 py-6 sm:py-8">
+<section id="tender-alert" class="bg-amber-50 border-y-2 border-amber-400 py-6 sm:py-8">
   <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
     <div class="flex flex-col gap-5 sm:flex-row sm:items-center sm:justify-between">
 
       <!-- Icon + Text -->
       <div class="flex items-start gap-4">
-        <!-- Bell icon -->
         <div class="flex h-11 w-11 flex-shrink-0 items-center justify-center rounded-full bg-amber-400 shadow">
           <svg class="h-6 w-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -45,11 +46,19 @@ const tender = {
           </h3>
           <p class="mt-0.5 text-sm text-gray-700">{tender.item}</p>
 
-          <p class="mt-1.5 flex flex-wrap items-center gap-x-3 gap-y-1 text-sm">
-            <span class="font-semibold text-red-600">
-              Closing: {tender.closingDate} at {tender.closingTime}
-            </span>
+          <p class="mt-1.5 text-sm font-semibold text-red-600">
+            Closing: {tender.closingDate} at {tender.closingTime}
           </p>
+
+          <!-- Countdown -->
+          <div id="tender-countdown" class="mt-2 flex flex-wrap gap-2" aria-live="polite">
+            {["days","hours","minutes","seconds"].map((unit) => (
+              <div class="flex flex-col items-center rounded-lg bg-amber-100 px-3 py-1.5 min-w-[52px]">
+                <span id={`cd-${unit}`} class="text-xl font-bold leading-none text-amber-800">--</span>
+                <span class="mt-0.5 text-[10px] font-semibold uppercase tracking-wide text-amber-600">{unit}</span>
+              </div>
+            ))}
+          </div>
         </div>
       </div>
 
@@ -81,3 +90,31 @@ const tender = {
     </div>
   </div>
 </section>
+
+<script define:vars={{ deadlineISO: tender.deadlineISO }}>
+  const deadline = new Date(deadlineISO);
+
+  function pad(n) { return String(n).padStart(2, "0"); }
+
+  function tick() {
+    const diff = deadline - Date.now();
+    if (diff <= 0) {
+      // Deadline passed while page was open — remove the banner
+      document.getElementById("tender-alert")?.remove();
+      return;
+    }
+    const totalSec = Math.floor(diff / 1000);
+    const days    = Math.floor(totalSec / 86400);
+    const hours   = Math.floor((totalSec % 86400) / 3600);
+    const minutes = Math.floor((totalSec % 3600) / 60);
+    const seconds = totalSec % 60;
+
+    document.getElementById("cd-days").textContent    = String(days);
+    document.getElementById("cd-hours").textContent   = pad(hours);
+    document.getElementById("cd-minutes").textContent = pad(minutes);
+    document.getElementById("cd-seconds").textContent = pad(seconds);
+  }
+
+  tick();
+  setInterval(tick, 1000);
+</script>

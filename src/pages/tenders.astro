@@ -2,6 +2,7 @@
 import BaseLayout from "../layouts/BaseLayout.astro";
 
 const now = new Date();
+const DEADLINE_ISO = "2026-04-20T12:00:00+03:00";
 
 const tenders = [
   {
@@ -157,6 +158,16 @@ const postedDateFormatted = (d: Date) =>
                   <p class={`text-sm font-bold ${tender.expired ? "text-gray-500 line-through decoration-gray-400" : "text-red-700"}`}>
                     {closingDateFormatted(tender.deadline)} at {tender.closingTime}
                   </p>
+                  {!tender.expired && (
+                    <div id={`countdown-${tender.id}`} class="mt-3 flex flex-wrap gap-2" aria-live="polite">
+                      {["days","hours","minutes","seconds"].map((unit) => (
+                        <div class="flex flex-col items-center rounded-lg bg-red-100 px-3 py-1.5 min-w-[52px]">
+                          <span id={`cd-${tender.id}-${unit}`} class="text-xl font-bold leading-none text-red-700">--</span>
+                          <span class="mt-0.5 text-[10px] font-semibold uppercase tracking-wide text-red-500">{unit}</span>
+                        </div>
+                      ))}
+                    </div>
+                  )}
                 </div>
               </div>
 
@@ -248,4 +259,34 @@ const postedDateFormatted = (d: Date) =>
       </div>
     </div>
   </section>
+<script define:vars={{ DEADLINE_ISO, tenderIds: enriched.filter(t => !t.expired).map(t => t.id) }}>
+  function pad(n) { return String(n).padStart(2, "0"); }
+
+  tenderIds.forEach((id) => {
+    const deadline = new Date(DEADLINE_ISO);
+
+    function tick() {
+      const diff = deadline - Date.now();
+      if (diff <= 0) {
+        // Reload so the server-rendered expired state is shown
+        window.location.reload();
+        return;
+      }
+      const totalSec = Math.floor(diff / 1000);
+      const days    = Math.floor(totalSec / 86400);
+      const hours   = Math.floor((totalSec % 86400) / 3600);
+      const minutes = Math.floor((totalSec % 3600) / 60);
+      const seconds = totalSec % 60;
+
+      const el = (unit) => document.getElementById(`cd-${id}-${unit}`);
+      if (el("days"))    el("days").textContent    = String(days);
+      if (el("hours"))   el("hours").textContent   = pad(hours);
+      if (el("minutes")) el("minutes").textContent = pad(minutes);
+      if (el("seconds")) el("seconds").textContent = pad(seconds);
+    }
+
+    tick();
+    setInterval(tick, 1000);
+  });
+</script>
 </BaseLayout>

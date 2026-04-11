@@ -1,10 +1,17 @@
 ---
+// Kenya time is UTC+3. Deadline: 20 April 2026 at 12:00 Noon EAT
+const deadline = new Date("2026-04-20T12:00:00+03:00");
+const isExpired = new Date() >= deadline;
+
+// Hide the banner entirely once the deadline has passed
+if (isExpired) return;
+
 const tender = {
   title: "Request for Quotation: Supply & Installation of Water Meters",
   quotationNo: "ITWASCO/WSTF-UPC8/QT/02/2026",
   item: "748 No. S150P Single-Jet Mechanical Domestic Water Meter DN 15MM",
   closingDate: "Monday, 20th April 2026",
-  closingTime: "12:00 Noon",
+  closingTime: "12:00 Noon (Kenya Time)",
   documentUrl: "/documents/RFQ-WSTF-METERS.pdf",
   tendersUrl: "/tenders",
 };

@@ -55,8 +55,7 @@ export const companyInfo = {
 export const organizationalStructure = {
   board: "Board of Directors",
   committees: [
-    "Technical Services Committee",
-    "Finance, HR & General Purpose Committee",
+    "Technical, Finance and General Purpose Committee",
     "Audit Risk & Governance Committee",
   ],
   departments: [

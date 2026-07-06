@@ -5,6 +5,7 @@ export const navigationLinks = [
   { name: "Blog", href: "/blog" },
   { name: "Tenders", href: "/tenders" },
   { name: "Strategic Plan", href: "/strategic-plan" },
+  { name: "Careers", href: "/careers" },
   { name: "Contact", href: "/contact" },
 ] as const;
 

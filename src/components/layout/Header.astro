@@ -31,12 +31,12 @@ const currentPath = Astro.url.pathname;
       </div>
 
       <!-- Desktop Navigation -->
-      <nav class="hidden md:flex md:items-center md:gap-1">
+      <nav class="hidden xl:flex xl:items-center xl:gap-1">
         {navigationLinks.map((link) => (
           <a
             href={link.href}
             class:list={[
-              "rounded-lg px-4 py-2 text-sm font-medium transition-colors",
+              "rounded-lg px-3 py-2 text-sm font-medium transition-colors whitespace-nowrap",
               currentPath === link.href
                 ? "bg-primary-50 text-primary-600"
                 : "text-gray-600 hover:bg-gray-50 hover:text-gray-900",
@@ -48,7 +48,7 @@ const currentPath = Astro.url.pathname;
       </nav>
 
       <!-- CTA Button (Desktop) -->
-      <div class="hidden md:block">
+      <div class="hidden xl:block">
         <a
           href="/contact"
           class="inline-flex items-center justify-center rounded-lg bg-primary-500 px-5 py-2.5 text-sm font-medium text-white shadow-sm transition-all hover:bg-primary-600 hover:shadow-md"
@@ -57,8 +57,8 @@ const currentPath = Astro.url.pathname;
         </a>
       </div>
 
-      <!-- Mobile Menu (positioned absolute on mobile) -->
-      <div class="absolute right-4 md:hidden">
+      <!-- Mobile Menu (positioned absolute below the xl breakpoint) -->
+      <div class="absolute right-4 xl:hidden">
         <MobileMenu client:load currentPath={currentPath} />
       </div>
     </div>

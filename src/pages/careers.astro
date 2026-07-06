@@ -4,18 +4,30 @@ import BaseLayout from "../layouts/BaseLayout.astro";
 const now = new Date();
 // 20 July 2026 at 5:00 PM Kenya Time (EAT = UTC+3)
 const DEADLINE = new Date("2026-07-20T17:00:00+03:00");
+// Vacancy notice stays visible in a "Closed" state for one week after the
+// deadline, then disappears from the site entirely.
+const REMOVAL_DATE = new Date(DEADLINE.getTime() + 7 * 24 * 60 * 60 * 1000);
+
 const msLeft = DEADLINE.getTime() - now.getTime();
 const expired = msLeft <= 0;
+const removed = now.getTime() >= REMOVAL_DATE.getTime();
 const daysLeft = Math.ceil(msLeft / (1000 * 60 * 60 * 24));
 const closingSoon = !expired && daysLeft <= 5;
 
 const badge = expired
-  ? { label: "Closed", classes: "bg-gray-200 text-gray-600" }
+  ? { label: "Applications Closed", classes: "bg-gray-200 text-gray-600" }
   : closingSoon
   ? { label: `Closing Soon — ${daysLeft}d left`, classes: "bg-amber-100 text-amber-700" }
   : { label: "Open", classes: "bg-green-100 text-green-700" };
 
 const deadlineFormatted = DEADLINE.toLocaleDateString("en-KE", {
+  weekday: "long",
+  year: "numeric",
+  month: "long",
+  day: "numeric",
+});
+
+const removalDateFormatted = REMOVAL_DATE.toLocaleDateString("en-KE", {
   weekday: "long",
   year: "numeric",
   month: "long",
@@ -94,6 +106,32 @@ const positions = [
   title="Careers"
   description="Careers at ITWASCO - Current job vacancies at Iten Tambach Water and Sewerage Company: Managing Director, Technical Manager, and Human Resource Manager."
 >
+  {removed ? (
+    <!-- Vacancy window fully closed and past the one-week grace period -->
+    <section class="bg-gradient-to-br from-primary-50 to-white py-16 sm:py-24">
+      <div class="mx-auto max-w-3xl px-4 text-center sm:px-6 lg:px-8">
+        <nav class="mb-6 text-sm text-gray-500">
+          <a href="/" class="hover:text-primary-600">Home</a>
+          <span class="mx-2">/</span>
+          <span class="text-gray-900">Careers</span>
+        </nav>
+        <svg class="mx-auto h-10 w-10 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+        </svg>
+        <h1 class="mt-4 text-3xl font-bold tracking-tight text-gray-900 sm:text-5xl">Careers</h1>
+        <p class="mx-auto mt-4 max-w-xl text-base text-gray-600 sm:text-lg">
+          There are no open positions at ITWASCO right now. Please check back later, or contact us to be notified of future vacancies.
+        </p>
+        <a
+          href="/contact"
+          class="mt-8 inline-flex items-center justify-center rounded-lg bg-primary-600 px-6 py-3 font-semibold text-white transition-colors hover:bg-primary-700"
+        >
+          Contact Us
+        </a>
+      </div>
+    </section>
+  ) : (
+  <>
   <!-- Page Hero -->
   <section class="bg-gradient-to-br from-primary-50 to-white py-8 sm:py-16">
     <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
@@ -117,22 +155,24 @@ const positions = [
 
         <!-- Text -->
         <div class="order-2 min-w-0 text-center lg:order-1 lg:text-left">
-          <span class="inline-flex items-center gap-1.5 rounded-full bg-primary-100 px-3 py-1 text-xs font-bold uppercase tracking-wide text-primary-700">
-            <span class="h-1.5 w-1.5 animate-pulse rounded-full bg-primary-600"></span>
-            Now Hiring
+          <span class={`inline-flex items-center gap-1.5 rounded-full px-3 py-1 text-xs font-bold uppercase tracking-wide ${expired ? "bg-gray-200 text-gray-600" : "bg-primary-100 text-primary-700"}`}>
+            {!expired && <span class="h-1.5 w-1.5 animate-pulse rounded-full bg-primary-600"></span>}
+            {expired ? "Applications Closed" : "Now Hiring"}
           </span>
           <h1 class="mt-4 text-3xl font-bold tracking-tight text-gray-900 sm:text-5xl">
             Careers
           </h1>
           <p class="mx-auto mt-2 max-w-2xl text-base text-gray-600 sm:mt-4 sm:text-lg lg:mx-0">
-            ITWASCO invites applications from qualified candidates for the following vacancies, as officially advertised.
+            {expired
+              ? "The application window below has closed. Full vacancy details remain available for reference."
+              : "ITWASCO invites applications from qualified candidates for the following vacancies, as officially advertised."}
           </p>
           <div class="mt-6 flex flex-wrap justify-center gap-3 lg:justify-start">
             <a
               href="#positions"
               class="inline-flex items-center gap-2 rounded-lg bg-primary-600 px-5 py-2.5 text-sm font-semibold text-white shadow transition-colors hover:bg-primary-700"
             >
-              View Open Positions
+              {expired ? "View Vacancy Details" : "View Open Positions"}
               <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
               </svg>
@@ -152,18 +192,33 @@ const positions = [
   </section>
 
   <!-- Notice banner -->
-  <section class="border-y border-amber-200 bg-amber-50 py-4">
-    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-      <div class="flex items-start gap-3 text-sm text-amber-800">
-        <svg class="mt-0.5 h-5 w-5 flex-shrink-0 text-amber-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-        </svg>
-        <p>
-          <strong>Deadline:</strong> All applications must be hand-delivered to ITWASCO Offices in Iten Town on or before {deadlineFormatted} at 5:00 PM. Any canvassing will lead to automatic disqualification.
-        </p>
+  {expired ? (
+    <section class="border-y border-gray-200 bg-gray-50 py-4">
+      <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <div class="flex items-start gap-3 text-sm text-gray-600">
+          <svg class="mt-0.5 h-5 w-5 flex-shrink-0 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+          </svg>
+          <p>
+            <strong class="text-gray-800">Applications Closed:</strong> The application window closed on {deadlineFormatted} at 5:00 PM. This notice remains available for reference until {removalDateFormatted}.
+          </p>
+        </div>
       </div>
-    </div>
-  </section>
+    </section>
+  ) : (
+    <section class="border-y border-amber-200 bg-amber-50 py-4">
+      <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <div class="flex items-start gap-3 text-sm text-amber-800">
+          <svg class="mt-0.5 h-5 w-5 flex-shrink-0 text-amber-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+          </svg>
+          <p>
+            <strong>Deadline:</strong> All applications must be hand-delivered to ITWASCO Offices in Iten Town on or before {deadlineFormatted} at 5:00 PM. Any canvassing will lead to automatic disqualification.
+          </p>
+        </div>
+      </div>
+    </section>
+  )}
 
   <!-- Positions List -->
   <section id="positions" class="scroll-mt-20 py-10 sm:py-16">
@@ -267,4 +322,6 @@ const positions = [
       </div>
     </div>
   </section>
+  </>
+  )}
 </BaseLayout>

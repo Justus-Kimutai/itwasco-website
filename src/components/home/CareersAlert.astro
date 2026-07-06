@@ -1,0 +1,103 @@
+---
+// Kenya time is UTC+3. Deadline: 20 July 2026 at 5:00 PM EAT
+const deadline = new Date("2026-07-20T17:00:00+03:00");
+const isExpired = new Date() >= deadline;
+
+// Hide the banner entirely once the deadline has passed
+if (isExpired) return;
+
+const careers = {
+  title: "We're Hiring: Managing Director, Technical Manager & HR Manager",
+  closingDate: "Monday, 20th July 2026",
+  closingTime: "5:00 PM (Kenya Time)",
+  careersUrl: "/careers",
+  // ISO string passed to client-side countdown
+  deadlineISO: deadline.toISOString(),
+};
+---
+
+<section id="careers-alert" class="bg-primary-50 border-y-2 border-primary-400 py-6 sm:py-8">
+  <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+    <div class="flex flex-col gap-5 sm:flex-row sm:items-center sm:justify-between">
+
+      <!-- Icon + Text -->
+      <div class="flex items-start gap-4">
+        <div class="flex h-11 w-11 flex-shrink-0 items-center justify-center rounded-full bg-primary-500 shadow">
+          <svg class="h-6 w-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+              d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+          </svg>
+        </div>
+
+        <div>
+          <div class="flex flex-wrap items-center gap-2">
+            <span class="inline-flex items-center gap-1.5 rounded-full bg-primary-500 px-2.5 py-0.5 text-xs font-bold uppercase tracking-wide text-white">
+              <span class="h-1.5 w-1.5 animate-pulse rounded-full bg-white"></span>
+              We're Hiring
+            </span>
+          </div>
+
+          <h3 class="mt-1 text-base font-bold text-gray-900 sm:text-lg">
+            {careers.title}
+          </h3>
+
+          <p class="mt-1.5 text-sm font-semibold text-red-600">
+            Closing: {careers.closingDate} at {careers.closingTime}
+          </p>
+
+          <!-- Countdown -->
+          <div id="careers-countdown" class="mt-2 flex flex-wrap gap-2" aria-live="polite">
+            {["days","hours","minutes","seconds"].map((unit) => (
+              <div class="flex flex-col items-center rounded-lg bg-primary-100 px-3 py-1.5 min-w-[52px]">
+                <span id={`careers-cd-${unit}`} class="text-xl font-bold leading-none text-primary-800">--</span>
+                <span class="mt-0.5 text-[10px] font-semibold uppercase tracking-wide text-primary-600">{unit}</span>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+
+      <!-- Actions -->
+      <div class="flex flex-shrink-0 flex-wrap gap-3 sm:flex-col sm:items-end lg:flex-row">
+        <a
+          href={careers.careersUrl}
+          class="inline-flex items-center gap-2 rounded-lg bg-primary-600 px-5 py-2.5 text-sm font-semibold text-white shadow transition-colors hover:bg-primary-700"
+        >
+          View Vacancies
+          <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+          </svg>
+        </a>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<script define:vars={{ deadlineISO: careers.deadlineISO }}>
+  const deadline = new Date(deadlineISO);
+
+  function pad(n) { return String(n).padStart(2, "0"); }
+
+  function tick() {
+    const diff = deadline - Date.now();
+    if (diff <= 0) {
+      // Deadline passed while page was open — remove the banner
+      document.getElementById("careers-alert")?.remove();
+      return;
+    }
+    const totalSec = Math.floor(diff / 1000);
+    const days    = Math.floor(totalSec / 86400);
+    const hours   = Math.floor((totalSec % 86400) / 3600);
+    const minutes = Math.floor((totalSec % 3600) / 60);
+    const seconds = totalSec % 60;
+
+    document.getElementById("careers-cd-days").textContent    = String(days);
+    document.getElementById("careers-cd-hours").textContent   = pad(hours);
+    document.getElementById("careers-cd-minutes").textContent = pad(minutes);
+    document.getElementById("careers-cd-seconds").textContent = pad(seconds);
+  }
+
+  tick();
+  setInterval(tick, 1000);
+</script>

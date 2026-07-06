@@ -9,8 +9,34 @@ interface Props {
 }
 
 const { title, description = "ITWASCO - Providing sustainable water services to Elgeyo Marakwet County, Kenya. Clean, affordable, and reliable water for all." } = Astro.props;
-const siteUrl = Astro.site || new URL("https://itwasco.co.ke");
+const siteUrl = Astro.site || new URL("https://itwasco.or.ke");
 const canonicalURL = new URL(Astro.url.pathname, siteUrl);
+const ogImageURL = new URL("/images/logo/itwasco-logo.png", siteUrl);
+
+const structuredData = {
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  name: "ITEN TAMBACH WATER AND SEWERAGE COMPANY LIMITED",
+  alternateName: "ITWASCO",
+  url: siteUrl.toString(),
+  logo: ogImageURL.toString(),
+  contactPoint: {
+    "@type": "ContactPoint",
+    telephone: "+254743286720",
+    contactType: "customer service",
+    email: "infoitwasco@gmail.com",
+    areaServed: "KE",
+    availableLanguage: ["English", "Swahili"],
+  },
+  address: {
+    "@type": "PostalAddress",
+    streetAddress: "Water Treatment Works Behind Posta Iten",
+    addressLocality: "Iten",
+    addressRegion: "Elgeyo Marakwet County",
+    postalCode: "30700",
+    addressCountry: "KE",
+  },
+};
 ---
 
 <!doctype html>
@@ -34,14 +60,14 @@ const canonicalURL = new URL(Astro.url.pathname, siteUrl);
     <meta property="og:url" content={canonicalURL} />
     <meta property="og:title" content={`${title} | ITWASCO`} />
     <meta property="og:description" content={description} />
-    <meta property="og:image" content="/images/logo/itwasco-logo.png" />
+    <meta property="og:image" content={ogImageURL} />
 
     <!-- Twitter -->
     <meta property="twitter:card" content="summary_large_image" />
     <meta property="twitter:url" content={canonicalURL} />
     <meta property="twitter:title" content={`${title} | ITWASCO`} />
     <meta property="twitter:description" content={description} />
-    <meta property="twitter:image" content="/images/logo/itwasco-logo.png" />
+    <meta property="twitter:image" content={ogImageURL} />
 
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -49,32 +75,7 @@ const canonicalURL = new URL(Astro.url.pathname, siteUrl);
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
 
     <!-- Structured Data -->
-    <script type="application/ld+json">
-      {
-        "@context": "https://schema.org",
-        "@type": "Organization",
-        "name": "ITEN TAMBACH WATER AND SEWERAGE COMPANY LIMITED",
-        "alternateName": "ITWASCO",
-        "url": "https://itwasco.co.ke",
-        "logo": "/images/logo/itwasco-logo.png",
-        "contactPoint": {
-          "@type": "ContactPoint",
-          "telephone": "+254743286720",
-          "contactType": "customer service",
-          "email": "infoitwasco@gmail.com",
-          "areaServed": "KE",
-          "availableLanguage": ["English", "Swahili"]
-        },
-        "address": {
-          "@type": "PostalAddress",
-          "streetAddress": "Water Treatment Works Behind Posta Iten",
-          "addressLocality": "Iten",
-          "addressRegion": "Elgeyo Marakwet County",
-          "postalCode": "30700",
-          "addressCountry": "KE"
-        }
-      }
-    </script>
+    <script type="application/ld+json" set:html={JSON.stringify(structuredData)} />
   </head>
   <body class="min-h-screen bg-white text-gray-900 antialiased">
     <!-- Skip to main content link for accessibility -->
